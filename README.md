@@ -333,6 +333,16 @@ MIT License
 
 자세한 문서는 [docs/](docs/) 디렉토리를 참조하세요:
 
+### 핵심 문서
+- **[TOON 명세서](docs/TOON_SPEC.md)** - TOON(Timestamped Object-Oriented Notation) 규격
+- **[사용 가이드](docs/USAGE.md)** - KORMARC 빌더 사용법
+- **[노원구 KORMARC 규칙](docs/NOWON_KORMARC_RULES.md)** - 노원구립도서관 KORMARC 적용 규칙
+
+### 검증 보고서
+- **[시방서 준수 검증 보고서](docs/NOWON_COMPLIANCE_VALIDATION_REPORT_100.md)** - 100개 레코드 검증 결과 (상세)
+- **[검증 요약](docs/NOWON_VALIDATION_SUMMARY.md)** - 검증 결과 한눈에 보기
+
+### 기타
 - **[문서 인덱스](docs/INDEX.md)** - 전체 문서 목차 및 빠른 링크
 - **[API 레퍼런스](docs/API.md)** - 완전한 API 문서
 - **[사용 예제](docs/EXAMPLES.md)** - 실용적인 사용 예제 및 패턴
