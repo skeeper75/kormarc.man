@@ -1,0 +1,719 @@
+# KDC 100개 3자리 분류 목록
+# Korean Decimal Classification - 100 Selected 3-Digit Classifications
+#
+# 선정 기준:
+# 1. 각 주류(0-9)에서 10개씩 균등 배분
+# 2. 도서관 장서가 많은 인기 분야 우선
+# 3. 한국 맥락에서 중요한 주제 우선
+# 4. 검색 키워드 포함 (한국어 + 영어)
+#
+# Generated: 2026-01-10
+# KDC Version: 6판 (2013)
+
+kdc_classifications:
+
+  # ========================================
+  # 0류: 총류 (General Works)
+  # ========================================
+  class_0_general:
+    - code: "004"
+      name: "컴퓨터과학, 데이터처리"
+      keywords: ["컴퓨터", "데이터처리", "정보과학", "computer science"]
+      description: "컴퓨터 일반, 정보이론, 인공지능 등"
+      difficulty: "easy"
+
+    - code: "005"
+      name: "컴퓨터 프로그래밍, 프로그램, 데이터"
+      keywords: ["프로그래밍", "Python", "Java", "소프트웨어", "코딩"]
+      description: "프로그래밍 언어, 알고리즘, 소프트웨어 개발"
+      difficulty: "easy"
+
+    - code: "010"
+      name: "문헌정보학, 도서관학"
+      keywords: ["도서관학", "문헌정보학", "도서관", "library science"]
+      description: "도서관 운영, 목록, 분류 등"
+      difficulty: "medium"
+
+    - code: "020"
+      name: "문헌정보학, 도서학"
+      keywords: ["도서학", "서지학", "bibliography"]
+      description: "서지, 목록학, 문헌 연구"
+      difficulty: "medium"
+
+    - code: "030"
+      name: "백과사전"
+      keywords: ["백과사전", "encyclopedia", "사전"]
+      description: "일반 백과사전, 참고도서"
+      difficulty: "easy"
+
+    - code: "050"
+      name: "일반 연속간행물, 일반 학회지"
+      keywords: ["학술지", "정기간행물", "journal", "매거진"]
+      description: "학술지, 잡지 등 정기간행물"
+      difficulty: "medium"
+
+    - code: "060"
+      name: "일반 학회, 단체, 박물관"
+      keywords: ["학회", "박물관", "museum", "단체"]
+      description: "학술단체, 박물관, 전시"
+      difficulty: "medium"
+
+    - code: "070"
+      name: "신문, 저널리즘"
+      keywords: ["신문", "저널리즘", "언론", "journalism", "뉴스"]
+      description: "신문학, 보도, 언론"
+      difficulty: "easy"
+
+    - code: "080"
+      name: "일반 전집, 총서"
+      keywords: ["전집", "총서", "시리즈", "collected works"]
+      description: "전집, 총서, 선집"
+      difficulty: "medium"
+
+    - code: "090"
+      name: "향토자료"
+      keywords: ["향토자료", "지역자료", "local history"]
+      description: "지역 자료, 향토 문화"
+      difficulty: "hard"
+
+  # ========================================
+  # 1류: 철학 (Philosophy)
+  # ========================================
+  class_1_philosophy:
+    - code: "100"
+      name: "철학"
+      keywords: ["철학", "philosophy", "사상"]
+      description: "철학 일반, 철학사"
+      difficulty: "medium"
+
+    - code: "110"
+      name: "형이상학"
+      keywords: ["형이상학", "metaphysics", "존재론"]
+      description: "존재론, 우주론, 형이상학"
+      difficulty: "hard"
+
+    - code: "120"
+      name: "인식론, 인과론, 인간학"
+      keywords: ["인식론", "인간학", "epistemology"]
+      description: "지식론, 인식론, 인간본성"
+      difficulty: "hard"
+
+    - code: "130"
+      name: "철학의 체계"
+      keywords: ["철학체계", "철학사조", "philosophical systems"]
+      description: "관념론, 유물론 등 철학 사조"
+      difficulty: "hard"
+
+    - code: "140"
+      name: "경학"
+      keywords: ["경학", "유교경전", "Confucian classics"]
+      description: "유교 경전, 사서삼경"
+      difficulty: "medium"
+
+    - code: "150"
+      name: "심리학"
+      keywords: ["심리학", "psychology", "정신", "마음"]
+      description: "심리학 일반, 심리 치료"
+      difficulty: "easy"
+
+    - code: "160"
+      name: "논리학"
+      keywords: ["논리학", "logic", "추론", "논증"]
+      description: "형식논리, 귀납법, 연역법"
+      difficulty: "medium"
+
+    - code: "170"
+      name: "윤리학, 도덕철학"
+      keywords: ["윤리학", "도덕", "ethics", "morality"]
+      description: "윤리, 도덕철학, 덕목"
+      difficulty: "medium"
+
+    - code: "180"
+      name: "양명학"
+      keywords: ["양명학", "Wang Yangming", "성리학"]
+      description: "양명학, 심학"
+      difficulty: "hard"
+
+    - code: "190"
+      name: "기타 철학"
+      keywords: ["현대철학", "실존주의", "현상학"]
+      description: "현대철학, 실존주의 등"
+      difficulty: "medium"
+
+  # ========================================
+  # 2류: 종교 (Religion)
+  # ========================================
+  class_2_religion:
+    - code: "200"
+      name: "종교"
+      keywords: ["종교", "religion", "신앙"]
+      description: "종교 일반, 비교종교학"
+      difficulty: "medium"
+
+    - code: "210"
+      name: "비교종교학"
+      keywords: ["비교종교", "종교사", "comparative religion"]
+      description: "종교 비교, 종교사"
+      difficulty: "hard"
+
+    - code: "220"
+      name: "불교"
+      keywords: ["불교", "Buddhism", "사찰", "스님"]
+      description: "불교 교리, 경전, 역사"
+      difficulty: "easy"
+
+    - code: "230"
+      name: "기독교"
+      keywords: ["기독교", "Christianity", "성경", "교회"]
+      description: "기독교 신학, 교회사"
+      difficulty: "easy"
+
+    - code: "231"
+      name: "신약성서"
+      keywords: ["신약성경", "New Testament", "복음서"]
+      description: "신약성경, 사도행전"
+      difficulty: "medium"
+
+    - code: "232"
+      name: "구약성서"
+      keywords: ["구약성경", "Old Testament", "모세오경"]
+      description: "구약성경, 창세기"
+      difficulty: "medium"
+
+    - code: "240"
+      name: "천주교"
+      keywords: ["천주교", "가톨릭", "Catholic", "교황"]
+      description: "로마 가톨릭, 교황청"
+      difficulty: "medium"
+
+    - code: "250"
+      name: "도교"
+      keywords: ["도교", "Taoism", "노자", "장자"]
+      description: "도교 사상, 도가철학"
+      difficulty: "hard"
+
+    - code: "270"
+      name: "이슬람교, 회교"
+      keywords: ["이슬람", "Islam", "코란", "무슬림"]
+      description: "이슬람 교리, 코란"
+      difficulty: "medium"
+
+    - code: "290"
+      name: "기타 제종교"
+      keywords: ["민속신앙", "무속", "샤머니즘", "shamanism"]
+      description: "무속, 민간신앙 등"
+      difficulty: "medium"
+
+  # ========================================
+  # 3류: 사회과학 (Social Sciences)
+  # ========================================
+  class_3_social_sciences:
+    - code: "300"
+      name: "사회과학"
+      keywords: ["사회과학", "social science", "사회"]
+      description: "사회과학 일반"
+      difficulty: "medium"
+
+    - code: "310"
+      name: "통계학"
+      keywords: ["통계", "statistics", "데이터분석"]
+      description: "통계학, 통계자료"
+      difficulty: "medium"
+
+    - code: "320"
+      name: "정치학"
+      keywords: ["정치학", "politics", "정치", "국가"]
+      description: "정치이론, 정치사상"
+      difficulty: "easy"
+
+    - code: "330"
+      name: "경제학"
+      keywords: ["경제학", "economics", "경제", "시장"]
+      description: "경제학 이론, 경제정책"
+      difficulty: "easy"
+
+    - code: "340"
+      name: "법학"
+      keywords: ["법학", "law", "법률", "헌법"]
+      description: "법률, 법학 이론"
+      difficulty: "medium"
+
+    - code: "350"
+      name: "행정학"
+      keywords: ["행정학", "행정", "public administration", "공무원"]
+      description: "행정이론, 공공정책"
+      difficulty: "medium"
+
+    - code: "360"
+      name: "사회학, 사회문제"
+      keywords: ["사회학", "sociology", "사회문제"]
+      description: "사회학 이론, 사회현상"
+      difficulty: "easy"
+
+    - code: "370"
+      name: "교육학"
+      keywords: ["교육학", "education", "교육", "학교"]
+      description: "교육이론, 교육제도"
+      difficulty: "easy"
+
+    - code: "380"
+      name: "상업, 통신, 교통"
+      keywords: ["상업", "무역", "교통", "commerce", "물류"]
+      description: "무역, 유통, 교통"
+      difficulty: "medium"
+
+    - code: "390"
+      name: "민속학, 문화인류학"
+      keywords: ["민속학", "문화인류학", "folklore", "전통문화"]
+      description: "민속, 풍속, 문화인류학"
+      difficulty: "medium"
+
+  # ========================================
+  # 4류: 자연과학 (Natural Sciences)
+  # ========================================
+  class_4_natural_sciences:
+    - code: "400"
+      name: "자연과학"
+      keywords: ["자연과학", "science", "과학"]
+      description: "자연과학 일반"
+      difficulty: "medium"
+
+    - code: "410"
+      name: "수학"
+      keywords: ["수학", "mathematics", "math", "계산"]
+      description: "수학 일반, 대수, 기하"
+      difficulty: "easy"
+
+    - code: "420"
+      name: "물리학"
+      keywords: ["물리학", "physics", "역학", "양자"]
+      description: "물리학, 역학, 광학"
+      difficulty: "medium"
+
+    - code: "430"
+      name: "화학"
+      keywords: ["화학", "chemistry", "분자", "원소"]
+      description: "화학 일반, 무기화학, 유기화학"
+      difficulty: "medium"
+
+    - code: "440"
+      name: "천문학"
+      keywords: ["천문학", "astronomy", "우주", "별"]
+      description: "천문학, 우주과학"
+      difficulty: "medium"
+
+    - code: "450"
+      name: "지학"
+      keywords: ["지질학", "geology", "지구과학", "암석"]
+      description: "지질학, 지구과학"
+      difficulty: "medium"
+
+    - code: "460"
+      name: "광물학"
+      keywords: ["광물학", "mineralogy", "광물", "보석"]
+      description: "광물, 암석학"
+      difficulty: "hard"
+
+    - code: "470"
+      name: "생명과학"
+      keywords: ["생명과학", "생물학", "biology", "생명"]
+      description: "생물학 일반, 생명과학"
+      difficulty: "easy"
+
+    - code: "480"
+      name: "식물학"
+      keywords: ["식물학", "botany", "식물", "꽃"]
+      description: "식물, 식물분류"
+      difficulty: "medium"
+
+    - code: "490"
+      name: "동물학"
+      keywords: ["동물학", "zoology", "동물", "생태"]
+      description: "동물, 동물분류"
+      difficulty: "easy"
+
+  # ========================================
+  # 5류: 기술과학 (Technology)
+  # ========================================
+  class_5_technology:
+    - code: "500"
+      name: "기술과학"
+      keywords: ["기술과학", "technology", "공학"]
+      description: "기술과학 일반"
+      difficulty: "medium"
+
+    - code: "510"
+      name: "의학"
+      keywords: ["의학", "medicine", "건강", "질병"]
+      description: "의학 일반, 임상의학"
+      difficulty: "easy"
+
+    - code: "511"
+      name: "기초의학"
+      keywords: ["기초의학", "해부학", "생리학", "병리학"]
+      description: "해부학, 생리학, 약리학"
+      difficulty: "medium"
+
+    - code: "513"
+      name: "내과학"
+      keywords: ["내과", "내과학", "internal medicine", "질병치료"]
+      description: "내과 질환, 진단, 치료"
+      difficulty: "medium"
+
+    - code: "517"
+      name: "외과학"
+      keywords: ["외과", "수술", "surgery", "외과학"]
+      description: "외과 수술, 외과 질환"
+      difficulty: "medium"
+
+    - code: "520"
+      name: "농업, 농학"
+      keywords: ["농업", "agriculture", "농학", "작물"]
+      description: "농업기술, 작물재배"
+      difficulty: "medium"
+
+    - code: "530"
+      name: "공학, 공업일반, 토목공학, 환경공학"
+      keywords: ["공학", "토목", "engineering", "건설"]
+      description: "토목공학, 건축공학"
+      difficulty: "medium"
+
+    - code: "540"
+      name: "건축공학"
+      keywords: ["건축", "architecture", "건축공학", "설계"]
+      description: "건축 설계, 건축구조"
+      difficulty: "easy"
+
+    - code: "550"
+      name: "기계공학"
+      keywords: ["기계공학", "mechanical engineering", "기계", "엔진"]
+      description: "기계, 기계설계"
+      difficulty: "medium"
+
+    - code: "570"
+      name: "화학공학"
+      keywords: ["화학공학", "chemical engineering", "화학공정"]
+      description: "화학공학, 화학공정"
+      difficulty: "hard"
+
+  # ========================================
+  # 6류: 예술 (Arts)
+  # ========================================
+  class_6_arts:
+    - code: "600"
+      name: "예술"
+      keywords: ["예술", "art", "미술", "음악"]
+      description: "예술 일반, 예술론"
+      difficulty: "medium"
+
+    - code: "610"
+      name: "건축술"
+      keywords: ["건축", "건축물", "architecture", "건물"]
+      description: "건축양식, 건축사"
+      difficulty: "medium"
+
+    - code: "620"
+      name: "조각"
+      keywords: ["조각", "sculpture", "조소", "조각작품"]
+      description: "조각예술, 조소"
+      difficulty: "medium"
+
+    - code: "630"
+      name: "공예, 장식미술"
+      keywords: ["공예", "crafts", "도자기", "전통공예"]
+      description: "도자기, 금속공예 등"
+      difficulty: "medium"
+
+    - code: "640"
+      name: "서예"
+      keywords: ["서예", "calligraphy", "붓글씨", "필법"]
+      description: "한국서예, 서예작품"
+      difficulty: "medium"
+
+    - code: "650"
+      name: "회화, 도화"
+      keywords: ["회화", "painting", "그림", "미술"]
+      description: "동양화, 서양화"
+      difficulty: "easy"
+
+    - code: "660"
+      name: "사진예술"
+      keywords: ["사진", "photography", "포토그래피", "촬영"]
+      description: "사진기술, 사진작품"
+      difficulty: "easy"
+
+    - code: "670"
+      name: "음악"
+      keywords: ["음악", "music", "음악사", "작곡"]
+      description: "음악이론, 음악사"
+      difficulty: "easy"
+
+    - code: "680"
+      name: "연극"
+      keywords: ["연극", "theater", "무대", "연기"]
+      description: "연극, 희곡, 연출"
+      difficulty: "medium"
+
+    - code: "690"
+      name: "오락, 운동"
+      keywords: ["스포츠", "운동", "게임", "sports"]
+      description: "체육, 오락, 게임"
+      difficulty: "easy"
+
+  # ========================================
+  # 7류: 언어 (Language)
+  # ========================================
+  class_7_language:
+    - code: "700"
+      name: "언어"
+      keywords: ["언어학", "linguistics", "언어", "language"]
+      description: "언어학 일반"
+      difficulty: "medium"
+
+    - code: "710"
+      name: "한국어"
+      keywords: ["한국어", "Korean language", "국어", "한글"]
+      description: "한국어 문법, 어휘"
+      difficulty: "easy"
+
+    - code: "720"
+      name: "중국어"
+      keywords: ["중국어", "Chinese", "중국어학습", "한자"]
+      description: "중국어, 한문"
+      difficulty: "easy"
+
+    - code: "730"
+      name: "일본어"
+      keywords: ["일본어", "Japanese", "일본어학습"]
+      description: "일본어, 일본어 문법"
+      difficulty: "easy"
+
+    - code: "740"
+      name: "영어"
+      keywords: ["영어", "English", "영어학습", "영문법"]
+      description: "영어, 영문법"
+      difficulty: "easy"
+
+    - code: "750"
+      name: "독일어"
+      keywords: ["독일어", "German", "독일어학습"]
+      description: "독일어, 독일어 문법"
+      difficulty: "medium"
+
+    - code: "760"
+      name: "프랑스어"
+      keywords: ["프랑스어", "French", "프랑스어학습"]
+      description: "프랑스어, 프랑스어 문법"
+      difficulty: "medium"
+
+    - code: "770"
+      name: "스페인어"
+      keywords: ["스페인어", "Spanish", "스페인어학습"]
+      description: "스페인어, 스페인어 문법"
+      difficulty: "medium"
+
+    - code: "780"
+      name: "이탈리아어"
+      keywords: ["이탈리아어", "Italian", "이탈리아어학습"]
+      description: "이탈리아어, 이탈리아어 문법"
+      difficulty: "medium"
+
+    - code: "790"
+      name: "기타 제어"
+      keywords: ["러시아어", "아랍어", "other languages"]
+      description: "러시아어, 아랍어 등"
+      difficulty: "medium"
+
+  # ========================================
+  # 8류: 문학 (Literature)
+  # ========================================
+  class_8_literature:
+    - code: "800"
+      name: "문학"
+      keywords: ["문학", "literature", "문학사", "작품"]
+      description: "문학 일반, 문학이론"
+      difficulty: "medium"
+
+    - code: "810"
+      name: "한국문학"
+      keywords: ["한국문학", "Korean literature", "한국작가"]
+      description: "한국문학 일반"
+      difficulty: "easy"
+
+    - code: "811"
+      name: "한국시"
+      keywords: ["한국시", "시", "poetry", "시집"]
+      description: "한국시, 시집"
+      difficulty: "easy"
+
+    - code: "813"
+      name: "한국소설"
+      keywords: ["한국소설", "소설", "novel", "장편소설"]
+      description: "한국소설, 장편, 단편"
+      difficulty: "easy"
+
+    - code: "814"
+      name: "한국수필"
+      keywords: ["수필", "essay", "에세이", "산문"]
+      description: "한국수필, 에세이"
+      difficulty: "easy"
+
+    - code: "820"
+      name: "중국문학"
+      keywords: ["중국문학", "Chinese literature", "중국작가"]
+      description: "중국문학, 한문학"
+      difficulty: "medium"
+
+    - code: "830"
+      name: "일본문학"
+      keywords: ["일본문학", "Japanese literature", "일본소설"]
+      description: "일본문학, 일본작가"
+      difficulty: "medium"
+
+    - code: "840"
+      name: "영미문학"
+      keywords: ["영미문학", "English literature", "영어소설"]
+      description: "영국문학, 미국문학"
+      difficulty: "easy"
+
+    - code: "850"
+      name: "독일문학"
+      keywords: ["독일문학", "German literature", "독일작가"]
+      description: "독일문학, 독일작가"
+      difficulty: "medium"
+
+    - code: "880"
+      name: "기타 제문학"
+      keywords: ["세계문학", "world literature", "프랑스문학"]
+      description: "프랑스, 러시아 등 기타 문학"
+      difficulty: "medium"
+
+  # ========================================
+  # 9류: 역사 (History)
+  # ========================================
+  class_9_history:
+    - code: "900"
+      name: "역사"
+      keywords: ["역사", "history", "역사학"]
+      description: "역사학 일반, 역사이론"
+      difficulty: "medium"
+
+    - code: "910"
+      name: "아시아"
+      keywords: ["아시아역사", "Asian history", "동양사"]
+      description: "아시아 역사 일반"
+      difficulty: "medium"
+
+    - code: "911"
+      name: "한국"
+      keywords: ["한국사", "Korean history", "조선", "고려"]
+      description: "한국역사, 조선시대"
+      difficulty: "easy"
+
+    - code: "912"
+      name: "중국"
+      keywords: ["중국사", "Chinese history", "중국역사"]
+      description: "중국역사, 중국왕조"
+      difficulty: "easy"
+
+    - code: "913"
+      name: "일본"
+      keywords: ["일본사", "Japanese history", "일본역사"]
+      description: "일본역사"
+      difficulty: "medium"
+
+    - code: "920"
+      name: "유럽"
+      keywords: ["유럽사", "European history", "서양사"]
+      description: "유럽 역사 일반"
+      difficulty: "medium"
+
+    - code: "930"
+      name: "아프리카"
+      keywords: ["아프리카역사", "African history", "아프리카"]
+      description: "아프리카 역사"
+      difficulty: "hard"
+
+    - code: "940"
+      name: "북아메리카"
+      keywords: ["미국사", "American history", "미국역사"]
+      description: "미국, 캐나다 역사"
+      difficulty: "medium"
+
+    - code: "950"
+      name: "남아메리카"
+      keywords: ["남미역사", "South American history", "남아메리카"]
+      description: "남아메리카 역사"
+      difficulty: "hard"
+
+    - code: "980"
+      name: "전기"
+      keywords: ["전기", "biography", "인물", "위인전"]
+      description: "위인전, 인물사"
+      difficulty: "easy"
+
+# ========================================
+# 메타데이터
+# ========================================
+metadata:
+  total_count: 100
+  distribution:
+    class_0: 10
+    class_1: 10
+    class_2: 10
+    class_3: 10
+    class_4: 10
+    class_5: 10
+    class_6: 10
+    class_7: 10
+    class_8: 10
+    class_9: 10
+
+  difficulty_distribution:
+    easy: 40  # 초보자도 데이터 수집 가능
+    medium: 48  # 중간 난이도
+    hard: 12  # 전문적 지식 필요
+
+  selection_criteria:
+    - "도서관 장서가 많은 인기 분야 우선"
+    - "한국 맥락에서 중요한 주제 우선"
+    - "데이터 수집 가능성 고려"
+    - "각 주류별 균등 배분 (10개씩)"
+    - "검색 키워드 다양성 확보"
+
+  usage_notes:
+    - "검색 키워드는 API/스크래퍼에서 사용"
+    - "난이도는 데이터 수집 난이도 기준"
+    - "easy: 일반 도서관에서 쉽게 찾을 수 있는 주제"
+    - "medium: 전문 도서관이나 대학 도서관 필요"
+    - "hard: 특수 컬렉션이나 전문 기관 필요"
+
+# ========================================
+# 데이터 수집 전략 권장사항
+# ========================================
+collection_strategy:
+  phase_1_easy:
+    count: 40
+    description: "초기 단계: easy 난이도 40개 우선 수집"
+    target_classifications:
+      - "004, 005 (컴퓨터)"
+      - "030, 070 (백과사전, 신문)"
+      - "150 (심리학)"
+      - "220, 230 (불교, 기독교)"
+      - "320, 330, 360, 370 (정치, 경제, 사회, 교육)"
+      - "410, 470, 490 (수학, 생명과학, 동물학)"
+      - "510, 540 (의학, 건축)"
+      - "650, 660, 670, 690 (회화, 사진, 음악, 스포츠)"
+      - "710, 720, 730, 740 (한국어, 중국어, 일본어, 영어)"
+      - "810, 811, 813, 814, 840 (한국문학, 시, 소설, 수필, 영미문학)"
+      - "911, 912, 980 (한국사, 중국사, 전기)"
+
+  phase_2_medium:
+    count: 48
+    description: "중기 단계: medium 난이도 48개 수집"
+    notes: "전문 도서관 또는 대학 도서관 활용"
+
+  phase_3_hard:
+    count: 12
+    description: "후기 단계: hard 난이도 12개 수집"
+    notes: "특수 컬렉션, 전문 기관 활용 필요"
