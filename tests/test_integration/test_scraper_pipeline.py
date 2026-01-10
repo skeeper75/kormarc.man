@@ -297,7 +297,7 @@ class TestScraperDataIntegrity:
     @pytest.mark.asyncio
     async def test_db_schema_validation(self, tmp_path):
         """
-        DB 스키마 검증
+        DB 스키마 검증 (v2)
 
         kormarc_records 테이블이 올바른 컬럼을 가지는지 확인
         """
@@ -315,19 +315,39 @@ class TestScraperDataIntegrity:
         )
         assert cursor.fetchone() is not None
 
+        # FTS5 테이블 존재 확인
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='kormarc_fts'")
+        assert cursor.fetchone() is not None
+
         # 컬럼 확인
         cursor.execute("PRAGMA table_info(kormarc_records)")
         columns = cursor.fetchall()
         column_names = [col[1] for col in columns]
 
-        # 필수 컬럼 검증 (실제 DB 스키마에 맞게)
-        # toon_id가 PRIMARY KEY이므로 id 컬럼은 없음
+        # v2 필수 컬럼 검증
         required_columns = [
             "toon_id",
             "timestamp_ms",
             "created_at",
             "record_type",
             "isbn",
+            # v2 정규화된 필드
+            "title",
+            "author",
+            "publisher",
+            "pub_year",
+            "kdc_code",
+            # v2 Leader 필드
+            "record_length",
+            "record_status",
+            "impl_defined1",
+            "impl_defined2",
+            "indicator_count",
+            "subfield_code_count",
+            "base_address",
+            "impl_defined3",
+            "entry_map",
+            # 원본 데이터
             "raw_kormarc",
             "parsed_data",
             "scraped_at",
@@ -335,6 +355,24 @@ class TestScraperDataIntegrity:
         ]
         for col in required_columns:
             assert col in column_names, f"Missing column: {col}"
+
+        # 인덱스 확인
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='index'")
+        indexes = {row[0] for row in cursor.fetchall()}
+
+        required_indexes = {
+            "idx_timestamp",
+            "idx_type",
+            "idx_isbn",
+            "idx_kdc_year",
+            "idx_publisher_year",
+            "idx_type_year",
+            "idx_title",
+            "idx_author",
+        }
+
+        for idx in required_indexes:
+            assert idx in indexes, f"Missing index: {idx}"
 
         conn.close()
         await db.close()
