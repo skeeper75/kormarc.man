@@ -1,0 +1,17 @@
+# System Configuration
+# Updated: 2026-01-10
+# Mode: Personal (GitHub) Automation Settings
+# Language: Korean (ko)
+
+moai:
+  # Batch 5.1: MoAI System Settings
+  update_check_frequency: "daily"
+  version_check:
+    enabled: true
+    cache_ttl_hours: 24
+
+github:
+  # Batch 3.10: GitHub Automation Settings
+  enable_trust_5: true
+  auto_delete_branches: true
+  spec_git_workflow: "feature_branch"

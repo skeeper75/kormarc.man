@@ -1,0 +1,23 @@
+# Git Strategy & Workflow Configuration
+# Updated: 2026-01-10
+# Mode: Personal (GitHub)
+# Language: Korean (ko)
+
+git_strategy:
+  mode: "personal"
+
+  personal:
+    # Batch 3.3: Personal Core Settings
+    workflow: "github-flow"
+    environment: "github"
+    github_integration: true
+    auto_branch: true
+
+    # Batch 3.4: Personal Commit & Push Settings
+    auto_commit: true
+    auto_pr: false
+    auto_push: true
+
+    # Batch 3.5: Personal Branch Settings
+    branch_prefix: "feature/SPEC-"
+    main_branch: "main"

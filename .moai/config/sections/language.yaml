@@ -1,0 +1,13 @@
+# Language Configuration
+# Updated: 2026-01-10T12:00:00Z
+
+language:
+  conversation_language: ko
+  conversation_language_name: Korean
+  agent_prompt_language: en
+  git_commit_messages: en
+  code_comments: en
+  documentation: ko
+  error_messages: ko
+  locale: ko_KR
+  token_cost_impact: 5

@@ -1,0 +1,13 @@
+# Project Configuration
+# Updated: 2026-01-10T12:00:00Z
+# User: 지니 (genie)
+# Language: Korean (ko)
+
+project:
+  name: kormarc.man
+  description: "단행본/고서/비도서/연속물용 KORMARC 포맷 정의 및 예제 제공 시스템"
+  locale: ko_KR
+  created_at: "2026-01-10T12:00:00Z"
+
+github:
+  profile_name: "skeeper75"

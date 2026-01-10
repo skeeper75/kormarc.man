@@ -1,0 +1,54 @@
+# Quality Configuration - Tab 4: Quality Principles & Reports
+# Updated: 2026-01-10T12:00:00Z
+# User: 지니 (genie)
+# Language: Korean (ko)
+
+quality:
+  constitution:
+    enforce_tdd: true
+    test_coverage_target: 85
+    principles:
+      simplicity:
+        max_projects: 5
+        max_concurrent_features: 3
+        max_code_complexity: 10
+
+  reports:
+    enabled: true
+    format: markdown
+    location: .moai/reports/
+    auto_publish: false
+    auto_publish_destination: github
+
+  quality_gates:
+    enforce_on_commit: true
+    enforce_on_pr: true
+    enforce_on_release: true
+
+  testing:
+    unit_test_framework: pytest
+    integration_test_framework: pytest
+    e2e_test_framework: pytest
+    coverage_minimum: 85
+    coverage_tool: pytest-cov
+
+  security:
+    enable_vulnerability_scanning: true
+    enable_dependency_check: true
+    enable_sast: true
+
+  code_quality:
+    enable_linting: true
+    enable_formatting: true
+    enable_type_checking: true
+
+  documentation:
+    require_code_comments: true
+    require_function_docstrings: true
+    require_module_docstrings: true
+    enforce_commit_message_quality: true
+
+  monitoring:
+    track_code_metrics: true
+    track_test_metrics: true
+    track_deployment_metrics: true
