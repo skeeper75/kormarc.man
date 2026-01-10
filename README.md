@@ -348,8 +348,171 @@ MIT License
 - **[사용 예제](docs/EXAMPLES.md)** - 실용적인 사용 예제 및 패턴
 - **[변경 로그](CHANGELOG.md)** - 버전 기록 및 릴리스 정보
 
+## SPEC-WEB-001: 웹 인터페이스 백엔드 MVP
+
+### 개요
+
+KORMARC 레코드 조회 및 검색을 위한 읽기 전용 REST API를 제공합니다. 100개의 프로토타입 레코드에 대한 웹 기반 인터페이스를 구축합니다.
+
+### 완료된 기능 (백엔드 MVP)
+
+현재 백엔드 API는 완전히 구현되어 테스트가 완료되었습니다:
+
+- **레코드 조회 API**: 페이지네이션된 레코드 목록 제공
+- **레코드 상세 API**: 개별 레코드의 완전한 정보 제공
+- **전문 검색 API**: SQLite FTS5 기반 키워드 검색
+
+### 빠른 시작 (API 서버)
+
+#### 1. 환경 설정
+
+```bash
+# 가상환경 생성 및 활성화
+python3.11 -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# .venv\Scripts\activate  # Windows
+
+# 의존성 설치
+pip install -e .
+```
+
+#### 2. API 서버 실행
+
+```bash
+# 개발 모드로 실행 (자동 재시작)
+uvicorn kormarc_web.main:app --reload --host 0.0.0.0 --port 8000
+
+# API 문서 접근
+# Swagger UI: http://localhost:8000/docs
+# ReDoc: http://localhost:8000/redoc
+```
+
+#### 3. API 엔드포인트
+
+**레코드 목록 조회**:
+```bash
+# 첫 페이지 (20개)
+curl http://localhost:8000/api/v1/records
+
+# 페이지네이션
+curl "http://localhost:8000/api/v1/records?page=2&size=10"
+```
+
+**레코드 상세 조회**:
+```bash
+curl http://localhost:8000/api/v1/records/{record_id}
+```
+
+**전문 검색**:
+```bash
+# 키워드 검색
+curl "http://localhost:8000/api/v1/search?q=서울"
+
+# 페이지네이션 포함
+curl "http://localhost:8000/api/v1/search?q=교육&page=1&size=20"
+```
+
+**헬스 체크**:
+```bash
+curl http://localhost:8000/health
+```
+
+### 테스트
+
+#### 단위 테스트 실행
+
+```bash
+# 전체 테스트 실행
+pytest
+
+# 커버리지 리포트 생성
+pytest --cov=src/kormarc_web --cov-report=html --cov-report=term
+
+# 커버리지 확인: htmlcov/index.html 열기
+```
+
+#### 테스트 결과
+
+- **테스트 통과**: 16/16 (100%)
+- **코드 커버리지**: 95.68%
+- **품질 점수**: PASS (Phase 0.5)
+
+### 기술 스택
+
+**백엔드**:
+- FastAPI 0.115.0 - 고성능 웹 프레임워크
+- Uvicorn 0.32.0 - ASGI 서버
+- Pydantic 2.10.0 - 데이터 검증
+- SQLite 3.35+ - FTS5 전문 검색 지원
+
+**개발 도구**:
+- pytest 8.0.0 - 테스트 프레임워크
+- pytest-asyncio 0.24.0 - 비동기 테스트
+- pytest-cov 6.0.0 - 커버리지 측정
+- ruff 0.8.0 - 린터 및 포맷터
+- mypy 1.14.0 - 정적 타입 검사
+
+### 프로젝트 구조
+
+```
+src/kormarc_web/
+├── main.py                  # FastAPI 애플리케이션 진입점
+├── api/
+│   └── routes/
+│       ├── records.py       # 레코드 조회 엔드포인트
+│       └── search.py        # 검색 엔드포인트
+├── data/
+│   ├── database.py          # SQLite 연결 관리
+│   └── repositories.py      # 데이터 액세스 계층
+├── schemas/
+│   ├── record.py            # Pydantic 스키마
+│   └── pagination.py        # 페이지네이션 스키마
+└── services/                # 비즈니스 로직 (향후 확장)
+
+tests/
+├── test_api/
+│   ├── test_records.py      # 레코드 API 테스트
+│   └── test_search.py       # 검색 API 테스트
+├── test_data/
+│   └── test_repositories.py # 리포지토리 테스트
+└── conftest.py              # 테스트 설정
+```
+
+### API 문서
+
+자세한 API 명세는 다음 문서를 참조하세요:
+
+- **[API 레퍼런스](docs/API_WEB.md)** - 완전한 REST API 문서
+- **[아키텍처 문서](docs/ARCHITECTURE_WEB.md)** - 백엔드 시스템 아키텍처
+- **[SPEC 문서](.moai/specs/SPEC-WEB-001/spec.md)** - 요구사항 및 설계 명세
+
+### 향후 작업
+
+백엔드 MVP가 완료되었으며, 다음 작업이 예정되어 있습니다:
+
+1. **프론트엔드 구현** (React + TypeScript)
+   - 레코드 목록 UI 컴포넌트
+   - 레코드 상세 페이지
+   - 검색 인터페이스
+   - 페이지네이션 UI
+
+2. **고급 기능**
+   - 레코드 내보내기 (JSON/MARCXML)
+   - 검색어 자동완성
+   - 통계 대시보드 (선택)
+   - 다크 모드 (선택)
+
+3. **배포 및 운영**
+   - Docker 컨테이너화
+   - CI/CD 파이프라인 구성
+   - 프로덕션 환경 설정
+
+---
+
 ## 관련 자료
 
 - [MARC21 Format](https://www.loc.gov/marc/bibliographic/)
 - [KORMARC 표준](https://www.kslib.or.kr/)
 - [MARC21 스키마](http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd)
+- [FastAPI 공식 문서](https://fastapi.tiangolo.com/)
+- [SQLite FTS5 문서](https://www.sqlite.org/fts5.html)
