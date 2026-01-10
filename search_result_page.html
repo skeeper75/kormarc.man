@@ -1,0 +1,1419 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="ISBN·ISSN·UCI·납본 시스템">
+<meta name="description" content="ISBN·ISSN·UCI·납본 시스템 도서검색 제공">
+<meta name="generator" content="jnet co. ltd.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ISBN·ISSN·UCI·납본 시스템">
+<meta property="og:description" content="ISBN·ISSN·UCI·납본 시스템 도서검색 제공">
+<meta property="og:image" content="/seoji/include/image/common/ico_sns_favicon.png">
+<meta property="og:url" content="https://www.nl.go.kr/seoji/">
+<link rel="canonical" href="https://www.nl.go.kr/seoji/">
+<title>ISBN/CIP 검색 : ISBN·ISSN·UCI·납본 시스템</title>
+<link rel="shortcut icon" href="/seoji/include/image/common/ico_sns_favicon.png">
+<link rel="stylesheet" href="/seoji/include/css/sub.css">
+<link rel="stylesheet" href="/seoji/include/css/jquery-ui.min.css">
+<script src="/seoji/include/js/jquery-1.12.4.min.js"></script>
+<script src="/seoji/include/js/jquery-ui.min.js"></script>
+<script src="/seoji/include/js/jquery.tab.js"></script>
+<script src="/seoji/include/js/jquery.ui.datepicker-ko.js"></script>
+<script src="/seoji/resource/common/jquery_plugin/validation/validator.js"></script>
+
+<script src="/kobids/resource/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/kobids/resource/common_adm/css/skins/skin-orange.css">
+
+<script src="/seoji/include/js/common.js"></script>
+<script src="/seoji/include/js/gnb.js"></script>
+<script src="/seoji/include/js/sub.js"></script>
+<script src="/seoji/include/js/search.js"></script>
+</head>
+<body>
+<!-- skip -->
+<ul class="skip">
+	<li><a href="#container">본문 바로가기</a></li>
+	<li><a href="#gnb">주메뉴 바로가기</a></li>
+</ul>
+<!-- skip -->
+<!-- wrap -->
+<div id="wrap">
+	<!-- S: 헤더 영역 -->
+	
+
+
+
+
+<script>
+
+var confirmSession = "";
+var maxSessionSecond = "1800";
+var remainingSeconds = "1800";
+
+var sessionInfoPub = "";
+var sessionInfoGov = "";
+var sessionInfoThesis = "";
+
+//<[[!CDATA[
+$(function(){
+	// 상세검색 팝업
+	$(".detailSearchBtn a").click(function(){
+		$("#detailSearchPop").css("display","flex");
+	});
+	$("#detailSearchClose, .btn.close").click(function(){
+		$("#detailSearchPop").css("display","none");
+		$(".detailSearchBtn a").focus();
+	});
+	$("#detailSearchClose").blur(function(){
+		$("#detailSearchPop .popCon").focus();
+	});
+	//출판예정일 시작일 달력
+	$("#publish_predate_s").datepicker({dateFormat: 'yy-mm-dd'});
+	//출판예정일 종료일 달력
+	$("#publish_predate_e").datepicker({dateFormat: 'yy-mm-dd'});
+	
+	$("#remainingSeconds").text(formatSessionTime(remainingSeconds));
+
+});
+//]]>
+
+</script>
+<script src="/seoji/include/js/sessionTimeoutCheck.js"></script>
+
+<header id="header">
+	<a href="#back" id="blackBG"><span class="blind">이전으로 돌아가기</span></a>
+	<div id="snb">
+		<div class="siteUtilGroup">
+			<div id="linkSite" class="linkSite">
+				<ul>
+					<li><a href="https://nl.go.kr/" target="_blank" title="새창열림">국립중앙도서관</a></li>
+				</ul>
+			</div>
+			<div id="siteMenu" class="siteMenu">
+				
+				
+				
+			<ul>
+					
+						
+							<li class="login"><a href="/seoji/contents/S70100000000.do">로그인</a></li>
+							<li class="join"><a href="/seoji/contents/S70300000000.do">계정등록</a></li>
+						
+						
+					
+				</ul><form name="topSearchForm" method="post" class="topSearchForm" onsubmit="fnTopSearch();return false;">
+					<fieldset>
+						<legend class="blind">통합검색 영역</legend>
+						<input type="hidden" name="schType" value="simple">
+						<div class="topSearchWrap" id="topSearchWrap">
+							<select name="schFld" title="검색항목 선택">
+								<option value="">전체</option>
+								<option value="title">제목</option>
+								<option value="author">저자</option>
+								<option value="publisher">발행처</option>
+								<option value="ea_isbn">ISBN</option>
+								<option value="control_no">CIP제어번호</option>
+								<option value="issn">ISSN</option>
+							</select>
+							<input type="text" name="schStr" value="" placeholder="도서정보 통합검색" title="검색어 입력">
+							<a href="#none" onclick="fnTopSearch();return false;" class="btnSearch"><span>검색</span></a>
+						</div>
+					</fieldset>
+				</form><div class="detailSearchBtn"><a href="#detailpop">상세검색</a></div></div>
+		</div>
+	</div>
+	<!-- 상세검색 팝업 -->
+	<div id="detailSearchPop" class="layerPop">
+		<div class="layerPopCon">
+			<div class="popTit">상세검색</div>
+			<div class="popCon" tabindex="0">
+				<div class="boardWrap detailSearch">
+					<form name="topDetailSearchForm" method="post" onsubmit="fnTopDetailSearch();return false;">
+						<input type="hidden" name="schType" value="detail">
+						<div class="board-write">
+							<ul>
+								<li>
+									<div>
+										<div class="tit">
+											<select name="f1" title="검색유형1 선택">
+												<option value="title">제목</option>
+											</select>
+										</div>
+										<div class="txt form">
+											<div class="detail-01">
+												<input type="text" name="v1" title="검색어1 입력" class="form-ele">
+												<select name="and1" title="검색조건1 선택">
+													<option value="AND">AND</option>
+													<option value="OR">OR</option>
+													<option value="NOT">NOT</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div>
+										<div class="tit">
+											<select name="f2" title="검색유형2 선택">
+												<option value="author">저자</option>
+											</select>
+										</div>
+										<div class="txt form">
+											<div class="detail-01">
+												<input type="text" name="v2" title="검색어2 입력" class="form-ele">
+												<select name="and2" title="검색조건2 선택">
+													<option value="AND">AND</option>
+													<option value="OR">OR</option>
+													<option value="NOT">NOT</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div>
+										<div class="tit">
+											<select name="f3" title="검색유형3 선택">
+												<option value="publisher">발행처</option>
+											</select>
+										</div>
+										<div class="txt form">
+											<div class="detail-01">
+												<input type="text" name="v3" title="검색어3 입력" class="form-ele">
+												<!--
+												<select name="and3" title="검색조건3 선택">
+													<option value="AND">AND</option>
+													<option value="OR">OR</option>
+													<option value="NOT">NOT</option>
+												</select>
+												-->
+											</div>
+										</div>
+									</div>
+								</li>
+								<!--
+								<li>
+									<div>
+										<div class="tit">
+											<select name="f4" title="검색유형4 선택">
+												<option value="" selected>키워드</option>
+											</select>
+										</div>
+										<div class="txt form">
+											<div class="detail-01">
+												<input type="text" name="v4" title="검색어4 입력" class="form-ele">
+											</div>
+										</div>
+									</div>
+								</li>
+								-->
+								<li>
+									<div>
+										<div class="tit">표준부호</div>
+										<div class="txt form">
+											<div class="detail-02">
+												<select name="f5" title="표준부호 선택">
+													<option value="isbn" selected="">ISBN</option>
+													<option value="issn">ISSN</option>
+												</select>
+												<input type="text" name="v5" title="표준부호 입력" class="form-ele">
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div>
+										<div class="tit">CIP제어번호</div>
+										<div class="txt form">
+											<div>
+												<!-- <input type="hidden" name="f6" value="control_no"> -->
+												<input type="text" name="v6" title="CIP제어번호 입력" class="form-ele">
+											</div>
+										</div>
+									</div>
+								</li>
+								<!-- <li>
+									<div>
+										<div class="tit">분류기호</div>
+										<div class="txt form">
+											<div class="detail-03">
+												<select name="f7" title="분류기호 선택">
+													<option value="kdc">한국십진분류표</option>
+													<option value="ddc">듀이십진분류표</option>
+												</select>
+												<input type="text" name="v7" title="분류기호 입력" class="form-ele">
+											</div>
+										</div>
+									</div>
+								</li> -->
+								<li>
+									<div>
+										<div class="tit">출판예정일 검색</div>
+										<div class="txt form">
+											<div class="detail-05">
+												<!-- <input type="hidden" name="f8" value="publish_predate"> -->
+												<input type="text" name="v8s" id="publish_predate_s" value="" class="form-ele date datepicker hasDatepicker" title="출판예정일 시작일 선택 및 입력">
+												<input type="text" name="v8e" id="publish_predate_e" value="" class="form-ele date datepicker hasDatepicker" title="출판예정일 종료일 선택 및 입력">
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</form>
+				</div>
+				<div class="btnGroup num3">
+					<a href="#" onclick="document.topDetailSearchForm.reset();return false;" class="btn cncl">입력초기화</a>
+					<a href="#" onclick="fnTopDetailSearch();return false;" class="btn themeBtn2">검색</a>
+					<a href="#" class="btn cncl close">닫기</a>
+				</div>
+			</div>
+			<a href="#" id="detailSearchClose" class="closeLayerPop"><span class="blind">닫기</span></a>
+		</div>
+	</div>
+	<!-- 상세검색 팝업 -->
+
+	<div class="headerInner clearfix">
+		<h1 id="logo"><a href="/seoji/"><span class="blind">ISBN·ISSN·UCI·납본 시스템</span></a></h1>
+		<a href="#open" id="mobileIndexOpen" title="메뉴 열기"><span><i></i><i></i><i></i></span></a>
+		<a href="#pasi" class="btnPasiTop"><span class="blind">간략검색</span></a>
+	</div>
+
+	<nav id="gnbNav" class="gnbNav">
+		<div id="mobileIndexClose">
+			<div><p>ISBN·ISSN·UCI·납본시스템</p></div>
+			<a href="#close"><span class="blind">메뉴 닫기</span></a>
+		</div>
+		
+		<ul id="gnb" class="gnb">
+
+			
+				
+				
+
+					<li id="gnb1" data-code="S20000000000"><a href="/seoji/contents/S20100000000.do">서비스안내</a>
+						<ul>
+							<li id="gnb1_1" data-code="S20100000000"><a href="/seoji/contents/S20101000000.do"><em>한국서지표준센터 소개</em></a>
+								<ul class="MkSub">
+									<li id="gnb1_1_1" data-code="S20101000000"><a href="/seoji/contents/S20101010000.do"><em>한국서지표준센터</em></a>
+										<ul class="MkTab">
+											<li id="gnb1_1_1_1" data-code="S20101010000"><a href="/seoji/contents/S20101010000.do"><em>한국서지표준센터 소개</em></a></li>
+											<li id="gnb1_1_1_2" data-code="S20101020000"><a href="/seoji/contents/S20101020000.do"><em>연혁</em></a></li>
+											
+											<li id="gnb1_1_1_5" data-code="S20101050000"><a href="/seoji/contents/S20101050000.do"><em>ISBN 소개</em></a></li>
+											<li id="gnb1_1_1_6" data-code="S20101060000"><a href="/seoji/contents/S20101060000.do"><em>ISSN 소개</em></a></li>
+											<!--  UCI등록관리시스템구축 : 시작 -->
+											<li id="gnb1_1_1_7" data-code="S20101070000"><a href="/seoji/contents/S20101070000.do"><em>UCI 소개</em></a></li>
+											<!--  UCI등록관리시스템구축 : 종료 -->
+										</ul>
+									</li>
+									<li id="gnb1_1_2" data-code="S20102000000"><a href="/seoji/contents/S20102010000.do"><em>국립중앙도서관 납본</em></a>
+										<ul class="MkTab">
+											<li id="gnb1_1_2_1" data-code="S20102010000"><a href="/seoji/contents/S20102010000.do"><em>납본제도란</em></a></li>
+											<li id="gnb1_1_2_2" data-code="S20102020000"><a href="/seoji/contents/S20102020000.do"><em>납본대상</em></a></li>
+											<li id="gnb1_1_2_3" data-code="S20102030000"><a href="/seoji/contents/S20102030000.do"><em>제출사항/납본처</em></a></li>
+											<li id="gnb1_1_2_4" data-code="S20102040000"><a href="/seoji/contents/S20102040000.do"><em>납본절차</em></a></li>
+											<li id="gnb1_1_2_5" data-code="S20102050000"><a href="/seoji/contents/S20102050000.do"><em>관련법령</em></a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li id="gnb1_2" data-code="S20101030000"><a href="/seoji/contents/S20101030000.do"><em>한국문헌번호 편람</em></a></li>
+							<li id="gnb1_3" data-code="S20101040000"><a href="/seoji/contents/S20101040100.do"><em>사용자 교육</em></a>
+								<ul class="MkTab">
+									<li id="gnb1_3_1" data-code="S20101040100"><a href="/seoji/contents/S20101040100.do"><em>사이버교육 신청</em></a></li>
+									<li id="gnb1_3_2" data-code="S20101040200"><a href="/seoji/contents/S20101040200.do"><em>집합교육 신청</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb1_4" data-code="S20200000000"><a href="/seoji/contents/S20200000000.do"><em>공지사항</em></a></li>
+							<li id="gnb1_5" data-code="S20300000000"><a href="/seoji/contents/S20301000000.do"><em>자주묻는질문</em></a>
+								<ul class="MkTab">
+									<li id="gnb1_5_1" data-code="S20301000000"><a href="/seoji/contents/S20301000000.do"><em>ISBN</em></a></li>
+									<li id="gnb1_5_2" data-code="S20302000000"><a href="/seoji/contents/S20302000000.do"><em>ISSN</em></a></li>
+									<li id="gnb1_5_3" data-code="S20303000000"><a href="/seoji/contents/S20303000000.do"><em>납본</em></a></li>
+									<li id="gnb1_5_4" data-code="S20304000000"><a href="/seoji/contents/S20304000000.do"><em>사이트관련</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb1_6" data-code="S20400000000"><a href="/seoji/contents/S20401000000.do"><em>문의처/찾아오시는 길</em></a>
+								<ul class="MkTab">
+									<li id="gnb1_6_1" data-code="S20401000000"><a href="/seoji/contents/S20401000000.do"><em>문의처</em></a></li>
+									<li id="gnb1_6_2" data-code="S20402000000"><a href="/seoji/contents/S20402000000.do"><em>찾아오시는 길</em></a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+<!--				2022.12.19 PDW : ISBN 기본 연결페이지 변경-->					
+<!--				<li id="gnb2" data-code=""><a href="/seoji/contents/S30100000000.do"><em>ISBN</em></a> -->
+					<li id="gnb2" data-code=""><a href="/seoji/contents/S30101000000.do"><em>ISBN</em></a>
+						<ul>
+							
+							<li id="gnb2_1" data-code="S30600000000"><a href="/seoji/contents/S30101000000.do"><em>신청 안내</em></a>
+								<ul class="MkTab">
+									<li id="gnb2_1_1" data-code="S30101000000"><a href="/seoji/contents/S30101000000.do"><em>발행자번호 신청 안내</em></a></li>
+									<li id="gnb2_1_2" data-code="S30201000000"><a href="/seoji/contents/S30201000000.do"><em>ISBN 신청 안내</em></a></li>
+									<li id="gnb2_1_3" data-code="S30301000000"><a href="/seoji/contents/S30301000000.do"><em>ISBN 정정/삭제 안내</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb2_2" data-code="S30100000000"><a href="/seoji/contents/S30103000000.do"><em>발행자번호 신청/정정</em></a>
+								<ul class="MkTab">
+									<li id="gnb2_2_1" data-code="S30102000000"><a href="/seoji/contents/S30102000000.do"><em>발행자번호 신청(신규/추가)</em></a></li>
+									<li id="gnb2_2_2" data-code="S30103000000"><a href="/seoji/contents/S30103000000.do"><em>발행자번호 신청 조회</em></a></li>
+									<li id="gnb2_2_3" data-code="S30104000000"><a href="/seoji/contents/S30104000000.do"><em>발행자정보 정정신청 및 조회</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb2_3" data-code="S30200000000"><a href="/seoji/contents/S30202000000.do"><em>ISBN 통보서 신청</em></a>
+								<ul class="MkTab">
+									<li id="gnb2_3_1" data-code="S30202000000"><a href="/seoji/contents/S30202000000.do"><em>ISBN 통보서 신청</em></a></li>
+									<li id="gnb2_3_2" data-code="S30203000000"><a href="/seoji/contents/S30203000000.do"><em>ISBN 통보서 신청 조회/수정</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb2_4" data-code="S30300000000"><a href="/seoji/contents/S30302000000.do"><em>ISBN 통보서 정정/삭제 신청</em></a>
+								<ul class="MkTab">
+									<li id="gnb2_4_1" data-code="S30302000000"><a href="/seoji/contents/S30302000000.do"><em>ISBN 정정/삭제 신청</em></a></li>
+									<li id="gnb2_4_2" data-code="S30303000000"><a href="/seoji/contents/S30303000000.do"><em>ISBN 정정/삭제 신청 조회/수정</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb2_5" data-code="S30400000000"><a href="/seoji/contents/S30400000000.do"><em>ISBN 완료 조회/바코드 다운로드</em></a></li>
+							
+						</ul>
+					</li>
+					<li id="gnb3" data-code="S40000000000"><a href="/seoji/contents/S40100000000.do"><em>ISSN</em></a>
+						<ul>
+							<li id="gnb3_1" data-code="S40100000000"><a href="/seoji/contents/S40101000000.do"><em>ISSN 신청</em></a>
+								<ul class="MkTab">
+									<li id="gnb3_1_1" data-code="S40101000000"><a href="/seoji/contents/S40101000000.do"><em>ISSN 신청 안내</em></a></li>
+									<li id="gnb3_1_2" data-code="S40102000000"><a href="/seoji/contents/S40102000000.do"><em>ISSN 신청</em></a></li>
+									<li id="gnb3_1_3" data-code="S40103000000"><a href="/seoji/contents/S40103000000.do"><em>ISSN 신청 조회/수정</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb3_2" data-code="S40200000000"><a href="/seoji/contents/S40201000000.do"><em>ISSN 정정 신청</em></a>
+								<ul class="MkTab">
+									<li id="gnb3_2_1" data-code="S40201000000"><a href="/seoji/contents/S40201000000.do"><em>ISSN 정정신청 안내</em></a></li>
+									<li id="gnb3_2_2" data-code="S40202000000"><a href="/seoji/contents/S40202000000.do"><em>ISSN 발행자정보 정정신청</em></a></li>
+									<li id="gnb3_2_3" data-code="S40203000000"><a href="/seoji/contents/S40203000000.do"><em>ISSN 정보 정정신청</em></a></li>
+									<li id="gnb3_2_4" data-code="S40204000000"><a href="/seoji/contents/S40204000000.do"><em>ISSN 정정신청 조회/수정</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb3_3" data-code="S40300000000"><a href="/seoji/contents/S40300000000.do"><em>ISSN 완료 조회/바코드 다운로드</em></a></li>
+						</ul>
+					</li>
+					<!-- 2025년 UCI 고도화 : 시작 -->
+					<li id="gnb4" data-code="S90000000000"><a href="/seoji/contents/S90101000000.do"><em>UCI</em></a>
+						<ul>
+							<li id="gnb4_1" data-code="S90500000000"><a href="/seoji/contents/S90101000000.do"><em>신청 안내</em></a>
+								<ul class="MkTab">
+									<li id="gnb4_1_1" data-code="S90101000000"><a href="/seoji/contents/S90101000000.do"><em>등록자번호 신청 안내</em></a></li>
+									<li id="gnb4_1_2" data-code="S90201000000"><a href="/seoji/contents/S90201000000.do"><em>UCI 신청 안내</em></a></li>
+									<li id="gnb4_1_3" data-code="S90501000000"><a href="/seoji/contents/S90501000000.do"><em>UCI 정정/삭제 안내</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb4_2" data-code="S90100000000"><a href="/seoji/contents/S90102000000.do"><em>등록자번호 신청</em></a>
+								<ul class="MkTab">
+									<li id="gnb4_2_1" data-code="S90102000000"><a href="/seoji/contents/S90102000000.do"><em>등록자번호 신청</em></a></li>
+									<li id="gnb4_2_2" data-code="S90103000000"><a href="/seoji/contents/S90103000000.do"><em>등록자번호 현황 조회</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb4_3" data-code="S90200000000"><a href="/seoji/contents/S90202000000.do"><em>UCI 신청</em></a>
+								<ul class="MkTab">
+									<li id="gnb4_3_1" data-code="S90202000000"><a href="/seoji/contents/S90202000000.do"><em>웹툰 신청</em></a></li>
+									<li id="gnb4_3_2" data-code="S90203000000"><a href="/seoji/contents/S90203000000.do"><em>웹소설 신청</em></a></li>
+									<li id="gnb4_3_3" data-code="S90301000000"><a href="/seoji/contents/S90301000000.do"><em>UCI 신청 현황 조회</em></a></li>
+									<!--20260107 남현우 -->
+									<!--<li id="gnb4_3_3" data-code="S90301000000"><a href="javascript:void(0);" onclick="alert('시스템 점검으로 신청현황 조회가 중단됩니다.\n 문의사항은 02-590-6387, 6378로 연락바랍니다.');" ><em>UCI 신청 현황 조회</em></a></li>-->
+								</ul>
+							</li>
+							<li id="gnb4_4" data-code="S90700000000"><a href="/seoji/contents/S90702000000.do"><em>UCI 조회/정정</em></a>
+								<ul class="">
+									<li id="gnb4_4_1" data-code="S90702000000"><a href="/seoji/contents/S90702000000.do"><em>UCI 조회/정정</em></a></li>
+									<li id="gnb4_4_2" data-code="S90703000000"><a href="/seoji/contents/S90703000000.do"><em>UCI 정정 현황 조회</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb4_5" data-code="S90400000000"><a href="/seoji/contents/S90401000000.do"><em>UCI 문의게시판</em></a>
+								<ul class="MkTab">
+									<li id="gnb4_5_1" data-code="S90401000000"><a href="/seoji/contents/S90401000000.do"><em>문의 게시판</em></a></li>
+									<li id="gnb4_5_2" data-code="S90402000000"><a href="/seoji/contents/S90402000000.do"><em>자주묻는 질문</em></a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<!-- 2025년 UCI 고도화 : 종료 -->
+					<li id="gnb5" data-code="S50000000000">
+						
+							
+							
+								<a href="/seoji/contents/S50100000000.do"><em>납본</em></a>
+							
+						
+						<ul>
+							<li id="gnb5_1" data-code="S50100000000"><a href="/seoji/contents/S50101000000.do"><em>단행본 납본</em></a>
+								<ul class="MkSub">
+									<li id="gnb5_1_1" data-code="S50101000000"><a href="/seoji/contents/S50101010000.do"><em>오프라인자료 납본</em></a>
+										<ul class="MkTab">
+											<li id="gnb5_1_1_1" data-code="S50101010000"><a href="/seoji/contents/S50101010000.do"><em>납본 안내</em></a></li>
+											<li id="gnb5_1_1_2" data-code="S50101020100"><a href="/seoji/contents/S50101020100.do"><em>납본서/보상청구서 출력</em></a>
+												<ul class="MkTab">
+													<li id="gnb5_1_1_2_1" data-code="S50101020100"><a href="/seoji/contents/S50101020100.do"><em>바구니담기</em></a></li>
+													<li id="gnb5_1_1_2_2" data-code="S50101020200"><a href="/seoji/contents/S50101020200.do"><em>납본서/보상청구서 출력</em></a></li>
+													<li id="gnb5_1_1_2_3" data-code="S50101020300"><a href="/seoji/contents/S50101020300.do"><em>납본서/보상청구서 출력 이력</em></a></li>
+												</ul>
+											</li>
+											<li id="gnb5_1_1_3" data-code="S50101030000"><a href="/seoji/contents/S50101030000.do"><em>납본 조회</em></a></li>
+											<li id="gnb5_1_1_4" data-code="S50101040000"><a href="/seoji/contents/S50101040000.do"><em>납본증명서 발급</em></a></li>
+										</ul>
+									</li>
+									<li id="gnb5_1_2" data-code="S50102000000"><a href="/seoji/contents/S50102010000.do"><em>온라인 자료 납본</em></a>
+										<ul class="MkTab">
+											<li id="gnb5_1_2_1" data-code="S50102010000"><a href="/seoji/contents/S50102010000.do"><em>납본 안내</em></a></li>
+											<li id="gnb5_1_2_2" data-code="S50102020000"><a href="/seoji/contents/S50102020100.do"><em>납본 등록</em></a>
+												<ul class="MkTab">
+													<li id="gnb5_1_2_2_1" data-code="S50102020100"><a href="/seoji/contents/S50102020100.do"><em>낱권 납본등록</em></a></li>
+													<li id="gnb5_1_2_2_2" data-code="S50102020200"><a href="/seoji/contents/S50102020200.do"><em>일괄 납본등록</em></a></li>
+												</ul>
+											</li>
+											<li id="gnb5_1_2_3" data-code="S50102030000"><a href="/seoji/contents/S50102030000.do"><em>납본 조회</em></a></li>
+											<li id="gnb5_1_2_4" data-code="S50102040000"><a href="/seoji/contents/S50102040000.do"><em>납본서/보상청구서</em></a></li>
+											<li id="gnb5_1_2_5" data-code="S50102050000"><a href="/seoji/contents/S50102050000.do"><em>납본증명서</em></a></li>
+										</ul>
+									</li>
+									<li id="gnb5_1_3" data-code=""><a href="/seoji/contents/S50103010000.do"><em>장애인용 디지털파일 제출</em></a>
+										<ul class="MkTab">
+											<li id="gnb5_1_3_1" data-code="S50103010000"><a href="/seoji/contents/S50103010000.do"><em>장애인용 디지털파일 제출 안내</em></a></li>
+											<li id="gnb5_1_3_2" data-code="S50103020000"><a href="/seoji/contents/S50103020000.do"><em>제출요청목록</em></a></li>
+											<li id="gnb5_1_3_3" data-code="S50103030000"><a href="/seoji/contents/S50103030000.do"><em>제출 조회</em></a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li id="gnb5_2" data-code="S50200000000"><a href="/seoji/contents/S50201000000.do"><em>연속간행물 납본</em></a>
+								<ul class="MkSub">
+									<li id="gnb5_2_1" data-code=""><a href="/seoji/contents/S50201010000.do"><em>오프라인자료 납본</em></a>
+										<ul class="MkTab">
+											<li id="gnb5_2_1_1" data-code="S50201010000"><a href="/seoji/contents/S50201010000.do"><em>납본 안내</em></a></li>
+											<li id="gnb5_2_1_2" data-code="S50201020100"><a href="/seoji/contents/S50201020100.do"><em>납본서/보상청구서 출력</em></a>
+												<ul class="MkTab">
+													<li id="gnb5_2_1_2_1" data-code="S50201020100"><a href="/seoji/contents/S50201020100.do"><em>바구니담기</em></a></li>
+													<li id="gnb5_2_1_2_2" data-code="S50201020200"><a href="/seoji/contents/S50201020200.do"><em>납본서/보상청구서 출력</em></a></li>
+													<li id="gnb5_2_1_2_3" data-code="S50201020300"><a href="/seoji/contents/S50201020300.do"><em>납본서/보상청구서 출력 이력</em></a></li>
+												</ul>
+											</li>
+											<li id="gnb5_2_1_3" data-code="S50201030000"><a href="/seoji/contents/S50201030000.do"><em>납본증명서 발급</em></a></li>
+										</ul>
+									</li>
+									<li id="gnb5_2_2" data-code=""><a href="/seoji/contents/S50202010000.do"><em>온라인 자료 납본</em></a>
+										<ul class="MkTab">
+											<li id="gnb5_2_2_1" data-code="S50202010000"><a href="/seoji/contents/S50202010000.do"><em>납본 안내</em></a></li>
+											<li id="gnb5_2_2_2" data-code="S50202020000"><a href="/seoji/contents/S50202020000.do"><em>납본 등록/조회</em></a></li>
+											<li id="gnb5_2_2_3" data-code="S50202030000"><a href="/seoji/contents/S50202030000.do"><em>납본서/보상청구서</em></a></li>
+											<li id="gnb5_2_2_4" data-code="S50202040000"><a href="/seoji/contents/S50202040000.do"><em>납본증명서</em></a></li>
+											<li id="gnb5_2_2_5" data-code="S50202050000"><a href="/seoji/contents/S50202050000.do"><em>수집동의서</em></a></li>
+											<li id="gnb5_2_2_6" data-code=""><a href="/archive/archive.do" target="_blank" onclick="this.blur();" title="전자저널 아카이브 바로가기 [새창으로 열림]"><em>전자저널 아카이브</em></a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li id="gnb5_3" data-code="">
+								
+									
+									
+										<a href="/seoji/contents/S50301000000.do"><em>공공간행물 납본</em></a>
+									
+								
+								<ul class="MkSub">
+									<li id="gnb5_3_1" data-code=""><a href="/seoji/contents/S50301010000.do"><em>단행본 납본</em></a>
+										<ul class="MkTab">
+											<li id="gnb5_3_1_1" data-code="S50301010000"><a href="/seoji/contents/S50301010000.do"><em>납본 안내</em></a></li>
+											<li id="gnb5_3_1_2" data-code="S50301020100"><a href="/seoji/contents/S50301020100.do"><em>납본서/보상청구서 출력</em></a>
+												<ul class="MkTab">
+													<li id="gnb5_3_1_2_1" data-code="S50301020100"><a href="/seoji/contents/S50301020100.do"><em>바구니담기</em></a></li>
+													<li id="gnb5_3_1_2_2" data-code="S50301020200"><a href="/seoji/contents/S50301020200.do"><em>납본서/보상청구서 출력</em></a></li>
+													<li id="gnb5_3_1_2_3" data-code="S50301020300"><a href="/seoji/contents/S50301020300.do"><em>납본서/보상청구서 출력 이력</em></a></li>
+												</ul>
+											</li>
+											<li id="gnb5_3_1_3" data-code="S50301030000"><a href="/seoji/contents/S50301030000.do"><em>납본조회</em></a></li>
+											<li id="gnb5_3_1_4" data-code="S50301040000"><a href="/seoji/contents/S50301040000.do"><em>납본증명서 발급</em></a></li>
+										</ul>
+									</li>
+									<li id="gnb5_3_2" data-code=""><a href="/seoji/contents/S50302010000.do"><em>연속간행물 납본</em></a>
+										<ul class="MkTab">
+											<li id="gnb5_3_2_1" data-code="S50302010000"><a href="/seoji/contents/S50302010000.do"><em>납본 안내</em></a></li>
+											<li id="gnb5_3_2_2" data-code="S50302020100"><a href="/seoji/contents/S50302020100.do"><em>납본서/보상청구서 출력</em></a>
+												<ul class="MkTab">
+													<li id="gnb5_3_2_2_1" data-code="S50302020100"><a href="/seoji/contents/S50302020100.do"><em>바구니담기</em></a></li>
+													<li id="gnb5_3_2_2_2" data-code="S50302020200"><a href="/seoji/contents/S50302020200.do"><em>납본서/보상청구서 출력</em></a></li>
+													<li id="gnb5_3_2_2_3" data-code="S50302020300"><a href="/seoji/contents/S50302020300.do"><em>납본서/보상청구서 출력 이력</em></a></li>
+												</ul>
+											</li>
+											<li id="gnb5_3_2_3" data-code="S50302030000"><a href="/seoji/contents/S50302030000.do"><em>납본증명서 발급</em></a></li>
+										</ul>
+									</li>
+									<li id="gnb5_3_3" data-code=""><a href="/seoji/contents/S50303010000.do"><em>디지털 파일 납본</em></a>
+										<ul class="MkTab">
+											<li id="gnb5_3_3_1" data-code="S50303010000"><a href="/seoji/contents/S50303010000.do"><em>납본 안내</em></a></li>
+											<li id="gnb5_3_3_2" data-code="S50303020000"><a href="/seoji/contents/S50303020100.do"><em>공공간행물(단행)</em></a>
+												<ul class="MkTab">
+													<li id="gnb5_3_3_2_1" data-code="S50303020100"><a href="/seoji/contents/S50303020100.do"><em>공공간행물 등록</em></a></li>
+													<li id="gnb5_3_3_2_2" data-code="S50303020200"><a href="/seoji/contents/S50303020200.do"><em>공공간행물 등록조회</em></a></li>
+													<li id="gnb5_3_3_2_3" data-code="S50303020300"><a href="/seoji/contents/S50303020300.do"><em>납본증명서 발급</em></a></li>
+												</ul>
+											</li>
+											<li id="gnb5_3_3_3" data-code="S50303030000"><a href="/seoji/contents/S50303030100.do"><em>공공간행물(연속)</em></a>
+												<ul class="MkTab">
+													<li id="gnb5_3_3_3_1" data-code="S50303030100"><a href="/seoji/contents/S50303030100.do"><em>공공간행물 등록</em></a></li>
+													<li id="gnb5_3_3_3_2" data-code="S50303030200"><a href="/seoji/contents/S50303030200.do"><em>공공간행물 등록조회</em></a></li>
+													<li id="gnb5_3_3_3_3" data-code="S50303030300"><a href="/seoji/contents/S50303030300.do"><em>납본증명서 발급</em></a></li>
+												</ul>
+											</li>
+											<li id="gnb5_3_3_4" data-code="S50303040000"><a href="/seoji/contents/S50303040000.do"><em>기관정보수정</em></a></li>
+											
+												
+												
+												
+											
+										</ul>
+									</li>
+								</ul>
+							</li>
+							
+							<li id="gnb5_4" data-code="">
+								<a href="/seoji/contents/S50601000000.do"><em>학위논문 납본</em></a>
+								<ul class="MkSub">
+									<li id="gnb5_4_1" data-code=""><a href="/seoji/contents/S50601010000.do"><em>디지털 파일 납본</em></a>
+										<ul class="MkTab">
+											<li id="gnb5_4_1_1" data-code="S50601010000"><a href="/seoji/contents/S50601010000.do"><em>납본 안내</em></a></li>
+											<li id="gnb5_4_1_2" data-code="S50601020000"><a href="/seoji/contents/S50601020000.do"><em>학위논문 등록</em></a></li>
+											<li id="gnb5_4_1_3" data-code="S50601030000"><a href="/seoji/contents/S50601030000.do"><em>학위논문 등록관리</em></a></li>
+											<li id="gnb5_4_1_4" data-code="S50601040000">
+												<a href="/seoji/contents/S50601040000.do">
+													<em>
+														
+														대학정보 수정
+														
+														
+													</em>
+												</a>
+											</li>
+											
+										</ul>
+									</li>
+								</ul>
+							</li>
+							
+						</ul>
+					</li>
+					<li id="gnb6" data-code="S60000000000"><a href="/seoji/contents/S60100000000.do"><em>계정관리</em></a>
+						<ul>
+							<li id="gnb6_1" data-code="S60100000000"><a href="/seoji/contents/S60101000000.do"><em>계정정보 관리</em></a>
+								<ul class="MkTab">
+									<li id="gnb6_1_1" data-code="S60101000000"><a href="/seoji/contents/S60101000000.do"><em>계정정보 확인</em></a></li>
+									<li id="gnb6_1_2" data-code="S60102000000"><a href="/seoji/contents/S60102000000.do"><em>비밀번호 변경</em></a></li>
+									<li id="gnb6_1_3" data-code="S60103000000"><a href="/seoji/contents/S60103000000.do"><em>발행처 정보 수정</em></a></li>
+									<li id="gnb6_1_4" data-code="S60104000000"><a href="/seoji/contents/S60104000000.do"><em>바구니 관리</em></a></li>
+								</ul>
+							</li>
+							
+							<li id="gnb6_3" data-code="S60300000000"><a href="/seoji/contents/S60301010000.do"><em>신청현황</em></a>
+								<ul class="MkSub">
+									<li id="gnb6_3_1" data-code="S60301000000"><a href="/seoji/contents/S60301010000.do"><em>업무별 신청현황</em></a>
+										<ul class="MkTab">
+											<li id="gnb6_3_1_1" data-code="S60301010000"><a href="/seoji/contents/S60301010000.do"><em>ISBN 신청 현황</em></a></li>
+											<li id="gnb6_3_1_2" data-code="S60301020000"><a href="/seoji/contents/S60301020000.do"><em>ISSN 신청 현황</em></a></li>
+
+											<li id="gnb6_3_1_3" data-code="S60301030000"><a href="/seoji/contents/S60301030100.do"><em>단행본 납본 현황</em></a>
+												<ul class="MkTab">
+													<li id="gnb7_3_1_3_1" data-code="S60301030100"><a href="/seoji/contents/S60301030100.do"><em>오프라인자료</em></a></li>
+													<li id="gnb7_3_1_3_2" data-code="S60301030200"><a href="/seoji/contents/S60301030200.do"><em>온라인자료</em></a></li>
+												</ul>
+											</li>
+											<li id="gnb6_3_1_4" data-code="S60301040000"><a href="/seoji/contents/S60301040000.do"><em>연속간행물 납본 현황</em></a></li>
+											<li id="gnb6_3_1_5" data-code="S60301050000"><a href="/seoji/contents/S60301050000.do"><em>발행자번호 부여현황</em></a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li id="gnb6_4" data-code="S60400000000"><a href="/seoji/contents/S60401000000.do"><em>발행처그룹(KPI) 정보</em></a>
+								<ul class="MkTab">
+									<li id="gnb6_4_1" data-code="S60401000000"><a href="/seoji/contents/S60401000000.do"><em>발행처그룹 신청</em></a></li>
+									<li id="gnb6_4_2" data-code="S60402000000"><a href="/seoji/contents/S60402000000.do"><em>발행처그룹 조회</em></a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+
+					<li id="gnb7" data-code="S70000000000"><a href="/seoji/contents/S70100000000.do"><em>회원</em></a>
+						<ul>
+							<li id="gnb7_1" data-code="S70100000000"><a href="/seoji/contents/S70100000000.do"><em>로그인</em></a></li>
+							<li id="gnb7_2" data-code="S70200000000"><a href="/seoji/contents/S70201000000.do"><em>아이디/비밀번호찾기</em></a>
+								<ul class="MkTab">
+									<li id="gnb7_2_1" data-code="S70201000000"><a href="/seoji/contents/S70201000000.do"><em>아이디 찾기</em></a></li>
+									<li id="gnb7_2_2" data-code="S70202000000"><a href="/seoji/contents/S70202000000.do"><em>비밀번호 찾기</em></a></li>
+								</ul>
+							</li>
+							<li id="gnb7_3" data-code="S70300000000"><a href="/seoji/contents/S70300000000.do"><em>계정등록</em></a></li>
+						</ul>
+					</li>
+					<li id="gnb8" data-code="S80000000000" class="fbC"><a href="/seoji/contents/S80100000000" class="current"><em>통합검색</em></a>
+						<ul>
+							<li id="gnb8_1" class="fbC"><a href="/seoji/contents/S80100000000.do" class="current"><em>검색결과</em></a>
+								<ul class="MkTab">
+									<li id="gnb8_1_1" data-code="S80100000000"><a href="#" onclick="fn_tabSearchIsbn(); return false;" class="current"><em>ISBN/CIP 검색</em></a></li>
+									<li id="gnb8_1_2" data-code="S80200000000"><a href="#" onclick="fn_tabSearchIssn(); return false;"><em>ISSN 검색</em></a></li>
+									<!-- 2025년 UCI 고도화 : 시작 -->
+									<li id="gnb8_1_3" data-code="S80300000000"><a href="#" onclick="fn_tabSearchUci(); return false;"><em>UCI 검색</em></a></li>
+									<!-- 2025년 UCI 고도화 : 종료-->
+								</ul>
+							</li>
+						</ul>
+					</li>
+
+				
+			
+
+		</ul>
+		<div class="btnTotal"><a href="#view" title="전체메뉴 보기"><span class="blind">전체메뉴</span></a></div>
+	</nav>
+	<div id="submenuArea"></div>
+	<div id="gnbblackBG"></div>
+</header>
+
+
+
+	<!-- E: 헤더 영역 -->
+	<div id="container" class="sub">
+		<!-- S: NAVI 영역 -->
+		<div class="navWrap">
+			<div class="navGroup clearfix">
+				<div id="lnb" class="navArea clearfix"><a href="/seoji/" title="메인으로 가기" class="home"><span class="blind">HOME</span></a><div class="navSelBox"><a href="javascript:;" class="btnSel">통합검색</a><ul><li class="lnb1"><a href="/seoji/contents/S20100000000.do">서비스안내</a></li>
+<li class="lnb2"><a href="/seoji/contents/S30101000000.do"><em>ISBN</em></a></li>
+<li class="lnb3"><a href="/seoji/contents/S40100000000.do"><em>ISSN</em></a></li>
+<li class="lnb4"><a href="/seoji/contents/S90101000000.do"><em>UCI</em></a></li>
+<li class="lnb5"><a href="/seoji/contents/S50100000000.do"><em>납본</em></a></li>
+<li class="lnb6"><a href="/seoji/contents/S60100000000.do"><em>계정관리</em></a></li>
+<li class="lnb7"><a href="/seoji/contents/S70100000000.do"><em>회원</em></a></li>
+<li class="lnb8"><a href="/seoji/contents/S80100000000" class="current"><em>통합검색</em></a></li>
+</ul></div><div class="navSelBox"><a href="javascript:;" class="btnSel">검색결과</a><ul><li class="lnb1"><a href="/seoji/contents/S80100000000.do" class="current"><em>검색결과</em></a></li>
+</ul></div><div class="navSelBox"><a href="javascript:;" class="btnSel">ISBN/CIP 검색</a><ul><li class="lnb1"><a href="#" onclick="fn_tabSearchIsbn(); return false;" class="current"><em>ISBN/CIP 검색</em></a></li>
+<li class="lnb2"><a href="#" onclick="fn_tabSearchIssn(); return false;"><em>ISSN 검색</em></a></li>
+<li class="lnb3"><a href="#" onclick="fn_tabSearchUci(); return false;"><em>UCI 검색</em></a></li>
+</ul></div></div>
+				<a href="#back" class="pageBackBtn"><span class="blind">뒤로가기</span></a>
+				<div class="mobileNowTit">ISBN/CIP 검색</div>
+				<!-- S: SNS 공유하기 -->
+				<div class="snsFarm">
+					<ul class="snsBtnArea clearfix">
+						<li><a href="#snsGroup" id="sns" title="SNS 공유하기" class="snsShare"><span class="blind">SNS 공유하기</span></a>
+							<div id="snsGroup" class="snsList clearfix">
+								<a href="#sns1" id="sns1" title="페이스북에 공유하기 새창열기" class="snsFacebook" onclick="javascript:fnShareFaceBook('http://www.nl.go.kr/seoji/contents/S80100000000.do?schStr=%ED%8C%8C%EC%9D%B4%EC%8D%AC&amp;schType=simple'); return false;"><span class="blind">페이스북</span></a>
+								<a href="#sns2" id="sns2" title="X에 공유하기 새창열기" class="snsTwitter" onclick="javascript:fnShareTwitter('http://www.nl.go.kr/seoji/contents/S80100000000.do?schStr=%ED%8C%8C%EC%9D%B4%EC%8D%AC&amp;schType=simple'); return false;"><span class="blind">X</span></a>
+								<a href="#sns3" id="sns3" title="네이버 블로그에 공유하기 새창열기" class="snsBlog" onclick="javascript:fnShareNaver('http://www.nl.go.kr/seoji/contents/S80100000000.do?schStr=%ED%8C%8C%EC%9D%B4%EC%8D%AC&amp;schType=simple'); return false;"><span class="blind">네이버 블로그</span></a>
+								<a href="#sns4" id="sns4" title="카카오스토리에 공유하기 새창열기" class="snsStory" onclick="javascript:fnShareKakaoStory('http://www.nl.go.kr/seoji/contents/S80100000000.do?schStr=%ED%8C%8C%EC%9D%B4%EC%8D%AC&amp;schType=simple'); return false;"><span class="blind">카카오스토리</span></a>
+							</div>
+						</li>
+						<li class="mobileHide"><a href="#print" id="pprint" title="새창에서 열림" class="snsPrint" onclick="javascript:fnPrintPopup();"><span class="blind">현재화면 프린트</span></a></li>
+					</ul>
+				</div>
+				<!-- E: SNS 공유하기 -->
+			</div>
+		</div>
+		<!-- E: NAVI 영역 -->
+		<div id="contentGroup">
+			<div id="contentcore">
+				<div class="naviandtitle">
+					<h3>ISBN/CIP 검색</h3>
+				</div>
+				<!-- S: TAB 영역 -->
+				<div class="mainTabNav" style="display: block;">
+					<ul class="mainTnb"><li class="choiced" style="width: calc(33.3333% - 4px);"><a href="#" onclick="fn_tabSearchIsbn(); return false;" class="current"><em>ISBN/CIP 검색</em></a></li>
+<li style="width: calc(33.3333% - 4px);"><a href="#" onclick="fn_tabSearchIssn(); return false;"><em>ISSN 검색</em></a></li>
+<li class="ttabLast" style="width: calc(33.3333% - 4px);"><a href="#" onclick="fn_tabSearchUci(); return false;"><em>UCI 검색</em></a></li>
+</ul>
+				</div>
+				<div class="tabNav">
+					<ul class="tnb">
+						<li></li>
+					</ul>
+				</div>
+				<!-- E: TAB 영역 -->
+				<div id="contents" class="contentArea">
+					<!-- S: 본문 영역 -->
+					<!-- 본문 영역 -->
+<script>
+$(function(){
+	var gnbId = $('li[data-code="S80100000000"]').attr("id");
+	initMenuById(gnbId);
+});
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+	@media screen and (max-width: 1024px){
+		.btnPasiTop {display: block;}
+	}
+</style>
+<script>
+//<[[!CDATA[
+$(document).ready(function(){
+	$("input[name=chkItem_all]").on("click", function(){
+		var frm = document.listForm;
+		var isChecked = $(this).is(":checked");
+		$("input[name=recKeyArray]").each(function(){
+			this.checked = isChecked;
+		});
+	});
+	// 리스트형/표지형 변환키
+	$('.resultMode .textViewBtn').on("click", function(){
+		const frm = document.paramForm;
+		frm.viewOption.value='text';
+		submit(frm);
+	});
+
+	$('.resultMode .imageViewBtn').on("click", function(){
+		const frm = document.paramForm;
+		frm.viewOption.value='image';
+		submit(frm);
+	});
+	
+});
+/* pagination 페이지 링크 function */
+function fn_egov_link_page(pageNo){
+	var frm = document.paramForm;
+	frm.page.value = pageNo;
+	submit(frm);
+}
+function fn_goView(isbn, cipId) {
+	var frm = document.paramForm;
+	frm.isbn.value = isbn;
+	frm.cipId.value = cipId;
+	frm.schM.value = "intgr_detail_view_isbn";
+	submit(frm);
+}
+function fn_sort(){
+	var sortForm = document.sortForm;
+	var frm = document.paramForm;
+	frm.pageUnit.value = sortForm.pageUnit.value;
+	frm.sort.value = sortForm.sort.value;
+	submit(frm);
+}
+function fn_facet_reset(){
+	var frm = document.paramForm;
+	frm.ebookYn.value = "";
+	frm.subject.value = "";
+	frm.bibYn.value = "";
+	frm.depositYn.value = "";
+	frm.cipYn.value = "";
+}
+
+function fn_searchFacet(field, keyword) {
+	var frm = document.paramForm;
+	if(field == "ebookYn") {
+		fn_facet_reset();
+	}
+	$("input[name='" + field + "']", "form[name='paramForm']" ).val(keyword);
+	submit(frm);
+}
+
+//구매목록작성
+function fnByExcel(){
+	if(!checkListData()){
+		return;
+	}
+	const frm = document.listForm;
+	frm.action = "/seoji/excel/isbn_intgr_buy_list_down_excel.do";
+	frm.submit();
+}
+//MARC다운로드
+function fnDownMarc(){
+	if(!checkListData()){
+		return;
+	}
+	
+	var recKeyArray = "";
+	$('input[name="recKeyArray"]:checked').each(function(){
+		if(recKeyArray.length > 0) {
+			recKeyArray += "&" ;
+		}
+		recKeyArray += "recKeyArray="+this.getAttribute("cipkey");
+	});
+	
+	location.href = location.origin + "/seoji/module/_isbn_intgr_marc_down.do?" + recKeyArray;
+}
+//현재목록다운로드
+function fnDownList(){
+	if(!checkListData()){
+		return;
+	}
+	const frm = document.listForm;
+	frm.action = "/seoji/excel/isbn_intgr_list_down_excel.do";
+	frm.submit();
+}
+//바구니담기
+function fnSetBasket(){
+
+	if(!checkListData()){
+		return;
+	}
+	if(confirm("바구니에 담긴 데이터는 세션이 종료되면 자동 삭제됩니다.")){
+		var recKeyStr = "";
+		$('input[name="recKeyArray"]:checked').each(function(){
+			if(recKeyStr.length > 0) {
+				recKeyStr += "," ;
+			}
+			recKeyStr += this.value;;
+		});
+		$.ajax({
+			type : "post",
+			url  : "/seoji/module/_isbn_intgr_save_basket.ajax",
+			data : $(document.listForm).serialize(),
+			success  : function(data){
+				alert(data.resultMsg);
+			},
+			error : function() {
+				alert("처리 중 오류가 발생하였습니다.");
+			}
+		});
+	}
+}
+function checkListData() {
+	if(Number("1968") == 0){
+		alert("조회 데이터가 없습니다.");
+		return false;
+	}
+	if($("input[name=recKeyArray]:checked").length == 0){
+		alert("선택된 데이터가 없습니다.");
+		return false;
+	}
+	return true;
+}
+//]]>
+</script>
+<form name="paramForm" method="post">
+	<input type="hidden" name="schM" value="">
+	<input type="hidden" name="page" value="1">
+	<input type="hidden" name="pageUnit" value="10">
+	<!-- seach -->
+	<input type="hidden" name="schType" value="simple">
+	<input type="hidden" name="schFld" value="">
+	<input type="hidden" name="schStr" value="파이썬">
+	<input type="hidden" name="viewOption" value="">
+	<input type="hidden" name="sort" value="">
+	<input type="hidden" name="f1" value="">
+	<input type="hidden" name="v1" value="">
+	<input type="hidden" name="and1" value="">
+	<input type="hidden" name="f2" value="">
+	<input type="hidden" name="v2" value="">
+	<input type="hidden" name="and2" value="">
+	<input type="hidden" name="f3" value="">
+	<input type="hidden" name="v3" value="">
+	<input type="hidden" name="f5" value="">
+	<input type="hidden" name="v5" value="">
+	<input type="hidden" name="v6" value="">
+	<input type="hidden" name="f7" value="">
+	<input type="hidden" name="v7" value="">
+	<input type="hidden" name="v8s" value="">
+	<input type="hidden" name="v8e" value="">
+	<!-- facet -->
+	<input type="hidden" name="ebookYn" value="">
+	<input type="hidden" name="subject" value="">
+	<input type="hidden" name="bibYn" value="">
+	<input type="hidden" name="depositYn" value="">
+	<input type="hidden" name="cipYn" value="">
+	<!-- detail -->
+	<input type="hidden" name="isbn" value="">
+	<input type="hidden" name="cipId" value="">
+</form>
+<div class="resultTxt">
+	<span></span> '<span class="themeFC2">전체</span> : <span class="themeFC">파이썬</span>'
+	
+	에 해당되는 자료의 검색 결과는 (총 <span class="themeFC totCnt_span">1,968</span>건) 입니다.
+</div>
+<div class="resultAreaWrap"><div id="pasiListWrap" class="pasiListWrap">
+		<a href="#Close" class="pasiTopClose"><span class="blind">검색제한 닫기</span></a>
+		<div class="pasiTotal">
+			<a href="#link" onclick="fn_searchFacet('ebookYn',''); return false;">
+				<span>전체 (1,968)</span>
+			</a>
+		</div>
+		<div class="pasiListArea paper ">
+			<div class="pasiListTop">
+				<a href="#link" class="arrow" onclick="fn_searchFacet('ebookYn','N'); return false;">
+					<span>종이책 (1,257)</span>
+				</a>
+			</div>
+			<div class="inner">
+				<div class="pasiListInfo type01">
+					<div class="typeTit">출판예정도서</div>
+					<div class="typeList">
+						<a href="#link" onclick="fn_searchFacet('cipYn', 'Y'); return false;" class="dot">
+							<span>출판예정도서목록[CIP] (223)</span>
+						</a>
+					</div>
+				</div>
+				<div class="pasiListInfo type02">
+					<div class="typeTit">주제별</div>
+					<div class="typeList">
+						<a href="#link" onclick="fn_searchFacet('subject','0'); return false;" class="dot">
+								<span>총류 (887)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('subject','5'); return false;" class="dot">
+								<span>기술과학 (229)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('subject','3'); return false;" class="dot">
+								<span>사회과학 (50)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('subject','4'); return false;" class="dot">
+								<span>자연과학 (25)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('subject','6'); return false;" class="dot">
+								<span>예술 (3)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('subject','7'); return false;" class="dot">
+								<span>언어 (1)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('subject','8'); return false;" class="dot">
+								<span>문학 (1)</span>
+							</a>
+						</div>
+				</div>
+				<div class="pasiListInfo type03">
+					<div class="typeTit">확정여부</div>
+					<div class="typeList">
+						<a href="#link" onclick="fn_searchFacet('bibYn','Y'); return false;" class="dot">
+								<span>출판확정 (997)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('bibYn','N'); return false;" class="dot">
+								<span>사전통보 (260)</span>
+							</a>
+						</div>
+				</div>
+				<div class="pasiListInfo type04">
+					<div class="typeTit">납본여부</div>
+					<div class="typeList">
+						<a href="#link" onclick="fn_searchFacet('depositYn', 'Y'); return false;" class="dot">
+								<span>납본 (994)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('depositYn', 'N'); return false;" class="dot">
+								<span>미납본 (263)</span>
+							</a>
+						</div>
+				</div>
+			</div>
+		</div>
+		<div class="pasiListArea ebook ">
+			<div class="pasiListTop">
+				<a href="#link" class="arrow" onclick="fn_searchFacet('ebookYn','Y'); return false;">
+					<span>전자출판물 (711)</span>
+				</a>
+			</div>
+			<div class="inner">
+				<div class="pasiListInfo type01">
+					<div class="typeTit">출판예정도서</div>
+					<div class="typeList">
+						<a href="#link" onclick="fn_searchFacet('cipYn','Y'); return false;" class="dot">
+							<span>출판예정도서목록[CIP] (60)</span>
+						</a>
+					</div>
+				</div>
+				<div class="pasiListInfo type02">
+					<div class="typeTit">주제별</div>
+					<div class="typeList">
+						<a href="#link" onclick="fn_searchFacet('subject','0'); return false;" class="dot">
+								<span>총류 (560)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('subject','5'); return false;" class="dot">
+								<span>기술과학 (92)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('subject','3'); return false;" class="dot">
+								<span>사회과학 (49)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('subject','4'); return false;" class="dot">
+								<span>자연과학 (7)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('subject','8'); return false;" class="dot">
+								<span>문학 (2)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('subject','1'); return false;" class="dot">
+								<span>철학 (1)</span>
+							</a>
+						</div>
+				</div>
+				<div class="pasiListInfo type03">
+					<div class="typeTit">확정여부</div>
+					<div class="typeList">
+						<a href="#link" onclick="fn_searchFacet('bibYn','N'); return false;" class="dot">
+								<span>사전통보 (427)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('bibYn','Y'); return false;" class="dot">
+								<span>출판확정 (284)</span>
+							</a>
+						</div>
+				</div>
+				<div class="pasiListInfo type04">
+					<div class="typeTit">납본여부</div>
+					<div class="typeList">
+						<a href="#link" onclick="fn_searchFacet('depositYn','N'); return false;" class="dot">
+								<span>미납본 (429)</span>
+							</a>
+						<a href="#link" onclick="fn_searchFacet('depositYn','Y'); return false;" class="dot">
+								<span>납본 (282)</span>
+							</a>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	<div class="resultListWrap">
+		<form name="sortForm" class="sortForm" method="post">
+			<!-- result Filter -->
+			<div class="resultFilter" style="position: relative; justify-content: space-between;">
+				<div class="resultMode">
+				<a href="#link" class="textViewBtn choiced" title="선택됨" onclick="return false;"><span class="blind">목록형</span></a>
+						<a href="#link" class="imageViewBtn" onclick="fn_viewOption('image');return false;"><span class="blind">표지형</span></a>
+					</div>
+				<div class="resultSort">
+					<div>
+						<p>출력건수</p>
+						<select name="pageUnit" class="countSel" title="출력건수 선택">
+							<option value="10">10개</option>
+							<option value="50">50개</option>
+							<option value="100">100개</option>
+						</select>
+					</div>
+					<div>
+						<p>정렬옵션</p>
+						<select name="sort" class="sortSel" title="정렬옵션 선택">
+							<option value="publish_predate desc">출판예정일(최근순)</option>
+							<option value="publish_predate asc">출판예정일(과거순)</option>
+							<option value="index_title asc">제목(ㄱ~ㅎ순)</option>
+							<option value="index_title desc">제목(ㅎ~ㄱ순)</option>
+							<option value="index_publisher asc">발행처(ㄱ~ㅎ순)</option>
+							<option value="index_publisher desc">발행처(ㅎ~ㄱ순)</option>
+						</select>
+					</div>
+					<a href="#link" onclick="javascript:fn_sort(); return false;" class="btn input">확인</a>
+				</div>
+			</div>
+			<!-- //result Filter -->
+		</form>
+		<!-- //result Head -->
+
+		<div class="resultHead">
+			<span class="chk chkOnly"><input type="checkbox" name="chkItem_all" id="chkItem_all"><label for="chkItem_all">전체 목록 선택</label></span>
+			<div class="btnAreaL">
+				<a href="#btn" onclick="javascript:fnSetBasket();" class="btn mini white">바구니담기</a>
+				<a href="#btn" onclick="fn_goMenu('S60104000000'); return false;" class="btn mini white">바구니보기</a>
+			</div>
+			<div class="btnAreaR">
+				<a href="#btn" onclick="javascript:fnByExcel();" class="btn mini white">구매목록작성</a>
+				<a href="#btn" onclick="javascript:fnDownMarc();" class="btn mini white">MARC다운로드</a>
+				<a href="#btn" onclick="javascript:fnDownList();" class="btn mini white">현재목록다운로드</a>
+			</div>
+		</div>
+		<!-- //result Head -->
+
+		<!-- result list -->
+		<div id="resultList_div" class="resultList listViewStyle">
+			<form name="listForm" method="post" target="hiddenFrame">
+				<div class="resultData">
+						<span class="chk chkOnly">
+							<input type="checkbox" name="recKeyArray" id="chkItem_230336289" value="230336289" cipkey="">
+							<label for="chkItem_230336289">&lt;span class='highlight'&gt;파이썬&lt;/span&gt; 프로그래밍 심화3</label>
+						</span>
+						<div class="resultInfo">
+							<div class="bookData">
+								<div class="tit">
+									<a href="#link" onclick="fn_goView('9791127047788','230336289,'); return false;">
+<!-- 									2022.12.19 PDW : 권차가 같이 표시되도록 수정 -->
+<b class="themeFC">[종이책]</b> 1. <span class="highlight">파이썬</span> 프로그래밍 심화3</a>
+								</div>
+								<ul class="dot-list">
+									<li>저자 :   ㈜크레버스</li>
+									<li>발행처: (주식회사)크레버스</li>
+									<li>ISBN: 979-11-270-4778-8 (63000)</li>
+									<li>제본형태: 종이책</li>
+									<li>발행(예정)일: 2026.03.02</li>
+									<li>가격: 30,000원</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				<div class="resultData">
+						<span class="chk chkOnly">
+							<input type="checkbox" name="recKeyArray" id="chkItem_230336291" value="230336291" cipkey="">
+							<label for="chkItem_230336291">&lt;span class='highlight'&gt;파이썬&lt;/span&gt; 프로그래밍 심화1</label>
+						</span>
+						<div class="resultInfo">
+							<div class="bookData">
+								<div class="tit">
+									<a href="#link" onclick="fn_goView('9791127047764','230336291,'); return false;">
+<!-- 									2022.12.19 PDW : 권차가 같이 표시되도록 수정 -->
+<b class="themeFC">[종이책]</b> 2. <span class="highlight">파이썬</span> 프로그래밍 심화1</a>
+								</div>
+								<ul class="dot-list">
+									<li>저자 :   ㈜크레버스</li>
+									<li>발행처: (주식회사)크레버스</li>
+									<li>ISBN: 979-11-270-4776-4 (63000)</li>
+									<li>제본형태: 종이책</li>
+									<li>발행(예정)일: 2026.03.02</li>
+									<li>가격: 30,000원</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				<div class="resultData">
+						<span class="chk chkOnly">
+							<input type="checkbox" name="recKeyArray" id="chkItem_230336290" value="230336290" cipkey="">
+							<label for="chkItem_230336290">&lt;span class='highlight'&gt;파이썬&lt;/span&gt; 프로그래밍 심화2</label>
+						</span>
+						<div class="resultInfo">
+							<div class="bookData">
+								<div class="tit">
+									<a href="#link" onclick="fn_goView('9791127047771','230336290,'); return false;">
+<!-- 									2022.12.19 PDW : 권차가 같이 표시되도록 수정 -->
+<b class="themeFC">[종이책]</b> 3. <span class="highlight">파이썬</span> 프로그래밍 심화2</a>
+								</div>
+								<ul class="dot-list">
+									<li>저자 :   ㈜크레버스</li>
+									<li>발행처: (주식회사)크레버스</li>
+									<li>ISBN: 979-11-270-4777-1 (63000)</li>
+									<li>제본형태: 종이책</li>
+									<li>발행(예정)일: 2026.03.02</li>
+									<li>가격: 30,000원</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				<div class="resultData">
+						<span class="chk chkOnly">
+							<input type="checkbox" name="recKeyArray" id="chkItem_230355777" value="230355777" cipkey="">
+							<label for="chkItem_230355777">프로그래밍의 정석 &lt;span class='highlight'&gt;파이썬&lt;/span&gt;</label>
+						</span>
+						<div class="resultInfo">
+							<div class="bookData">
+								<div class="tit">
+									<a href="#link" onclick="fn_goView('9791194630548','230355777,'); return false;">
+<!-- 									2022.12.19 PDW : 권차가 같이 표시되도록 수정 -->
+<b class="themeFC">[전자출판물]</b> 4. 프로그래밍의 정석 <span class="highlight">파이썬</span></a>
+								</div>
+								<ul class="dot-list">
+									<li>저자 : 도경구</li>
+									<li>발행처: (주)생능출판사</li>
+									<li>ISBN: 979-11-94630-54-8 (15000)</li>
+									<li>제본형태: 전자책</li>
+									<li>발행(예정)일: 2026.01.30</li>
+									<li>가격: 28,000원</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				<div class="resultData">
+						<span class="chk chkOnly">
+							<input type="checkbox" name="recKeyArray" id="chkItem_230367646" value="230367646" cipkey="">
+							<label for="chkItem_230367646">&lt;span class='highlight'&gt;파이썬&lt;/span&gt; AI 애플리케이션 개발</label>
+						</span>
+						<div class="resultInfo">
+							<div class="bookData">
+								<div class="tit">
+									<a href="#link" onclick="fn_goView('9791194409618','230367646,'); return false;">
+<!-- 									2022.12.19 PDW : 권차가 같이 표시되도록 수정 -->
+<b class="themeFC">[전자출판물]</b> 5. <span class="highlight">파이썬</span> AI 애플리케이션 개발</a>
+								</div>
+								<ul class="dot-list">
+									<li>저자 : 레이첼 팔머;저자 : 벤 펄무프터;저자 : 아쉬윈 강가다르;저자 : 니콜라스 라루;저자 : 시그프리도 나르바에스;저자 : 토마스 루엑스티스;저자 : 헨리 웰러;저자 : 리치몬드 앨레이크;저자 : 슈밤 란잔;역자 : 테크 트랜스 그룹 T4;</li>
+									<li>발행처: (주식회사) 에이콘온</li>
+									<li>ISBN: 979-11-94409-61-8 (95000)</li>
+									<li>제본형태: 전자책</li>
+									<li>발행(예정)일: 2026.01.23</li>
+									<li>가격: 25,600원</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				<div class="resultData">
+						<span class="chk chkOnly">
+							<input type="checkbox" name="recKeyArray" id="chkItem_230371451" value="230371451" cipkey="">
+							<label for="chkItem_230371451">제대로 알고 쓰는 논문 통계분석 with &lt;span class='highlight'&gt;파이썬&lt;/span&gt;&amp;머신러닝					</label>
+						</span>
+						<div class="resultInfo">
+							<div class="bookData">
+								<div class="tit">
+									<a href="#link" onclick="fn_goView('9791173400520','230371451,'); return false;">
+<!-- 									2022.12.19 PDW : 권차가 같이 표시되도록 수정 -->
+<b class="themeFC">[종이책]</b> 6. 제대로 알고 쓰는 논문 통계분석 with <span class="highlight">파이썬</span>&amp;머신러닝					</a>
+								</div>
+								<ul class="dot-list">
+									<li>저자 : 노경섭</li>
+									<li>발행처: 한빛아카데미 주식회사</li>
+									<li>ISBN: 979-11-7340-052-0 (93310)</li>
+									<li>제본형태: 종이책</li>
+									<li>발행(예정)일: 2026.01.19</li>
+									<li>가격: 38,000원</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				<div class="resultData">
+						<span class="chk chkOnly">
+							<input type="checkbox" name="recKeyArray" id="chkItem_230365942" value="230365942" cipkey="">
+							<label for="chkItem_230365942">멘토시리즈 &lt;span class='highlight'&gt;파이썬&lt;/span&gt; 입문</label>
+						</span>
+						<div class="resultInfo">
+							<div class="bookData">
+								<div class="tit">
+									<a href="#link" onclick="fn_goView('9791189028503','230365942,'); return false;">
+<!-- 									2022.12.19 PDW : 권차가 같이 표시되도록 수정 -->
+<b class="themeFC">[종이책]</b> 7. 멘토시리즈 <span class="highlight">파이썬</span> 입문</a>
+								</div>
+								<ul class="dot-list">
+									<li>저자 :  코리아교육그룹 교육연구소</li>
+									<li>발행처: (주)코리아교육그룹</li>
+									<li>ISBN: 979-11-89028-50-3 (13000)</li>
+									<li>제본형태: 종이책</li>
+									<li>발행(예정)일: 2026.01.16</li>
+									<li>가격: 30,000원</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				<div class="resultData">
+						<span class="chk chkOnly">
+							<input type="checkbox" name="recKeyArray" id="chkItem_230362357" value="230362357" cipkey="">
+							<label for="chkItem_230362357">만들면서 배우는 &lt;span class='highlight'&gt;파이썬&lt;/span&gt; 프로젝트</label>
+						</span>
+						<div class="resultInfo">
+							<div class="bookData">
+								<div class="tit">
+									<a href="#link" onclick="fn_goView('9791165923198','230362357,'); return false;">
+<!-- 									2022.12.19 PDW : 권차가 같이 표시되도록 수정 -->
+<b class="themeFC">[전자출판물]</b> 8. 만들면서 배우는 <span class="highlight">파이썬</span> 프로젝트</a>
+								</div>
+								<ul class="dot-list">
+									<li>저자 : 윤성필</li>
+									<li>발행처: 비제이퍼블릭</li>
+									<li>ISBN: 979-11-6592-319-8 (95000)</li>
+									<li>제본형태: 전자책</li>
+									<li>발행(예정)일: 2026.01.14</li>
+									<li>가격: 19,200원</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				<div class="resultData">
+						<span class="chk chkOnly">
+							<input type="checkbox" name="recKeyArray" id="chkItem_230337666" value="230337666" cipkey="">
+							<label for="chkItem_230337666">만들면서 배우는 &lt;span class='highlight'&gt;파이썬&lt;/span&gt; 프로젝트</label>
+						</span>
+						<div class="resultInfo">
+							<div class="bookData">
+								<div class="tit">
+									<a href="#link" onclick="fn_goView('9791165922511','230337666,'); return false;">
+<!-- 									2022.12.19 PDW : 권차가 같이 표시되도록 수정 -->
+<b class="themeFC">[종이책]</b> 9. 만들면서 배우는 <span class="highlight">파이썬</span> 프로젝트</a>
+								</div>
+								<ul class="dot-list">
+									<li>저자 : 윤성필</li>
+									<li>발행처: 비제이퍼블릭</li>
+									<li>ISBN: 979-11-6592-251-1 (93000)</li>
+									<li>제본형태: 종이책</li>
+									<li>발행(예정)일: 2026.01.14</li>
+									<li>가격: 24,000원</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				<div class="resultData">
+						<span class="chk chkOnly">
+							<input type="checkbox" name="recKeyArray" id="chkItem_230347379" value="230347379" cipkey="">
+							<label for="chkItem_230347379">R과 &lt;span class='highlight'&gt;파이썬&lt;/span&gt;을 활용한 논문연구법</label>
+						</span>
+						<div class="resultInfo">
+							<div class="bookData">
+								<div class="tit">
+									<a href="#link" onclick="fn_goView('9791188109388','230347379,'); return false;">
+<!-- 									2022.12.19 PDW : 권차가 같이 표시되도록 수정 -->
+<b class="themeFC">[전자출판물]</b> 10. R과 <span class="highlight">파이썬</span>을 활용한 논문연구법</a>
+								</div>
+								<ul class="dot-list">
+									<li>저자 : 차경천</li>
+									<li>발행처: (도서출판)창명</li>
+									<li>ISBN: 979-11-88109-38-8 (95320)</li>
+									<li>제본형태: 전자책</li>
+									<li>발행(예정)일: 2026.01.12</li>
+									<li>가격: 30,000원</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</form>
+		</div>
+		<!-- //result list -->
+		<!-- 페이징 -->
+		<div class="pagingWrap">
+			<p class="paging">
+				<span><input type="text" id="paging_current_page" value="1" title="페이지번호입력"> / 197 <a href="#go" id="paging_btn_go_page" onclick="fn_go_page(197); return false;" class="pageGo">이동</a></span><a href="#none" class="btn-paging next" onclick="fn_egov_link_page(2); return false;"><span class="blind">다음페이지</span></a><a href="#none" class="btn-paging last" onclick="fn_egov_link_page(197); return false;"><span class="blind">마지막페이지</span></a>
+</p>
+		</div>
+		<!-- //페이징 -->
+	</div>
+</div>
+
+
+					<!-- E: 본문 영역 -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- S: 풋터 영역 -->
+	
+
+
+
+<script type="text/javascript" src="https://ds.nl.go.kr/js/nlogger.js"></script>
+<script type="text/javascript">
+	nLogger.configure({
+		nth_service_id: "seoji", // 로그 생성 단위, 첨부파일 참조
+		nth_logging_url_base_http: "https://ds.nl.go.kr/nlog", // 수집 서버 주소
+		nth_logging_url_base_https: "https://ds.nl.go.kr/nlog" // 수집 서버 주소
+	});
+</script>
+<script type="text/javascript">
+	nLogger.log();
+</script>
+<!-- footer -->
+<footer id="footer">
+	<div class="footerInner clearfix">
+			<div class="fnbMenu">
+				<ul class="fnb">
+					<li><a href="https://nl.go.kr/NL/contents/N70101000000.do" target="_blank" title="새창열림"><span>개인정보처리방침</span></a></li>
+					<li><a href="/seoji/contents/S20401000000.do"><span>문의처</span></a></li>
+					<li><a href="/seoji/contents/S20402000000.do"><span>오시는길</span></a></li>
+				</ul>
+			</div>
+			<div class="fnbMenu">
+				<ul class="fnbTel">
+					<li>문의전화(대표) : 02-590-0700<br>(내선1 ISBN / 내선2 ISSN / 내선3 납본)<br>(웹툰/웹소설 UCI : 02-590-6387, 6378)</li>
+                </ul>
+			</div>
+		<div class="fAdd">
+			<address>
+				<p><span>우편번호</span> 06579 서울서초구 반포대로 201(반포동)  국립중앙도서관</p>
+				<p><span>비밀번호 문의</span> : loginisbnissn@korea.kr</p>
+				<p><span>팩스</span> 02-590-0621(ISBN, ISSN) / 02-590-0620(도서납본) / 02-590-6291(연속납본) / 02-590-0672(온라인납본,UCI)</p>
+				<p><span>E-mail</span> : isbn@korea.kr (ISBN) / issn@korea.kr (ISSN) / book2@korea.kr(도서납본) / serials@korea.kr(연속 납본) / onsujip2020@korea.kr(전자책 납본) / onserials@korea.kr(온라인저널 납본) / uci2025@korea.kr(UCI)</p>
+				<p>Copyright(c) 2021 by National Library of Korea  All Rights Reserved.</p>
+			</address>
+		</div>
+	</div>
+</footer>
+<a href="#body" id="btnTopScroll" title="상단으로 이동"><p><span>위로</span></p></a>
+<!-- //footer -->
+
+<input type="hidden" name="pbInitNo1" id="pbInitNo1" value="8">
+<input type="hidden" name="pbInitNo2" id="pbInitNo2" value="1">
+<input type="hidden" name="pbInitNo3" id="pbInitNo3" value="1">
+<input type="hidden" name="pbInitNo4" id="pbInitNo4" value="0">
+<input type="hidden" name="pbInitNo5" id="pbInitNo5" value="0">
+<iframe name="hiddenFrame" id="hiddenFrame" title="빈프레임" style="display:none;"></iframe>
+	<!-- E: 풋터 영역 -->
+</div>
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>
