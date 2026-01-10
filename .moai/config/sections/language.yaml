@@ -1,10 +1,10 @@
 # Language Configuration
-# Updated: 2026-01-10T12:00:00Z
+# Updated: 2026-01-10T14:30:00Z
 
 language:
   conversation_language: ko
   conversation_language_name: Korean
-  agent_prompt_language: en
+  agent_prompt_language: ko
   git_commit_messages: en
   code_comments: en
   documentation: ko
