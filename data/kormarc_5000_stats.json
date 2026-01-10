@@ -1,0 +1,13 @@
+{
+  "total_records": 5000,
+  "inserted": 5000,
+  "failed": 0,
+  "duration_seconds": 4.3797008991241455,
+  "category_counts": {
+    "academic": 1250,
+    "comic": 1250,
+    "general": 1250,
+    "serial": 1250
+  },
+  "database_size_mb": 20.08984375
+}
