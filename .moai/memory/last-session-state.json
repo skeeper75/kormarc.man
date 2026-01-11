@@ -1,7 +1,7 @@
 {
-  "last_updated": "2026-01-11T00:51:42.174594",
-  "current_branch": "feature/SPEC-VALIDATION-001",
-  "uncommitted_changes": null,
-  "uncommitted_files": 0,
+  "last_updated": "2026-01-12T02:53:29.819737",
+  "current_branch": "main",
+  "uncommitted_changes": "⚠️  5 uncommitted files detected - Consider committing or stashing changes",
+  "uncommitted_files": 5,
   "specs_in_progress": []
 }
