@@ -509,6 +509,132 @@ tests/
 
 ---
 
+## SPEC-FRONTEND-001: 웹 인터페이스 프론트엔드
+
+### 개요
+
+KORMARC 생성을 위한 웹 기반 사용자 인터페이스입니다. Next.js 16과 React 19를 활용하여 현대적이고 반응형의 프론트엔드를 구현했습니다.
+
+### 완료된 기능
+
+- ✅ KORMARC 레코드 생성 폼
+- ✅ 실시간 ISBN 검증
+- ✅ 5단계 검증 상태 표시
+- ✅ JSON/XML 결과 미리보기
+- ✅ 다운로드/클립보드 복사 기능
+- ✅ 폼 자동 저장 (localStorage)
+- ✅ 백엔드 API 통합
+
+### 기술 스택
+
+- **프레임워크**: Next.js 16.1, React 19.0
+- **언어**: TypeScript 5.9
+- **스타일**: Tailwind CSS 4.0 + Shadcn UI
+- **폼**: React Hook Form 7.71 + Zod 4.3
+- **테스트**: Vitest, React Testing Library, Playwright
+- **API**: fetch API + Next.js API Routes
+
+### 빠른 시작
+
+#### 개발 환경 설정
+
+```bash
+# 의존성 설치
+npm install
+
+# 개발 서버 실행
+npm run dev
+# http://localhost:3000에서 접근
+```
+
+#### 테스트 실행
+
+```bash
+# 모든 테스트 실행
+npm test
+
+# 테스트 커버리지 리포트
+npm run test:coverage
+
+# Vitest UI (대화형)
+npm run test:ui
+```
+
+#### 프로덕션 빌드
+
+```bash
+# 빌드
+npm run build
+
+# 프로덕션 서버 실행
+npm start
+```
+
+### 주요 엔드포인트
+
+**홈 페이지**
+- URL: http://localhost:3000/
+- 도서 정보 입력 폼 및 KORMARC 생성
+
+**API 프록시**
+- POST /api/kormarc
+- 백엔드 API로 요청 전달 및 응답 수신
+
+### 테스트 결과
+
+- **테스트**: 68개 모두 통과 ✅
+- **커버리지**: 84.41%
+- **품질**: TRUST 5 모두 PASS
+
+### 프로젝트 구조
+
+```
+app/
+├── page.tsx                    # 홈 페이지
+├── layout.tsx                  # 루트 레이아웃
+├── components/
+│   ├── BookInfoForm.tsx        # 도서 정보 입력 폼
+│   ├── ISBNInput.tsx           # ISBN 실시간 검증
+│   ├── ValidationStatus.tsx    # 5단계 검증 상태
+│   ├── KORMARCPreview.tsx      # JSON/XML 미리보기
+│   ├── ExportButtons.tsx       # 다운로드/복사
+│   └── LoadingSpinner.tsx      # 로딩 표시
+├── api/kormarc/route.ts        # API 프록시
+└── lib/
+    ├── validators.ts          # Zod 검증
+    └── api-client.ts          # API 클라이언트
+
+__tests__/
+├── components/                # 컴포넌트 테스트
+├── lib/                       # 유틸리티 테스트
+└── setup.ts                   # 테스트 설정
+```
+
+### 관련 문서
+
+- **[프론트엔드 아키텍처](docs/ARCHITECTURE_FRONTEND.md)** - 시스템 설계 및 구조
+- **[개발 가이드](docs/FRONTEND_GUIDE.md)** - 컴포넌트 개발 방법
+- **[API 통합](docs/API_INTEGRATION.md)** - 백엔드 통신
+- **[테스트 전략](docs/FRONTEND_TESTING.md)** - 테스트 작성 및 실행
+- **[SPEC 명세](.moai/specs/SPEC-FRONTEND-001/spec.md)** - 요구사항 및 설계
+
+### 배포
+
+#### Vercel 배포 (권장)
+
+```bash
+vercel deploy
+```
+
+#### Docker 배포
+
+```bash
+docker build -t kormarc-frontend .
+docker run -p 3000:3000 kormarc-frontend
+```
+
+---
+
 ## 관련 자료
 
 - [MARC21 Format](https://www.loc.gov/marc/bibliographic/)
