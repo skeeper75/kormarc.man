@@ -4,7 +4,74 @@
  * Based on API_WEB.md documentation
  */
 
-import type { RecordsResponse, RecordDetail } from './store'
+import type { RecordsResponse, RecordDetail, Record } from './store'
+
+/**
+ * Backend API response types (with toon_id)
+ */
+interface BackendRecord {
+  toon_id: string
+  timestamp_ms: number
+  created_at: string
+  record_type: string
+  isbn: string | null
+  title: string | null
+  author: string | null
+  publisher: string | null
+  pub_year: number | null
+  kdc_code: string | null
+}
+
+interface BackendRecordsResponse {
+  items: BackendRecord[]
+  total: number
+  page: number
+  size: number
+}
+
+interface BackendRecordDetail extends BackendRecord {
+  record_length: number | null
+  record_status: string | null
+  raw_kormarc: string | null
+  parsed_data: unknown | null
+}
+
+/**
+ * Map backend record to frontend record
+ */
+function mapBackendRecord(backend: BackendRecord): Record {
+  const id = backend.toon_id || `unknown-${Date.now()}-${Math.random()}`
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+    console.log('[mapBackendRecord] Input:', backend)
+    console.log('[mapBackendRecord] Mapped id:', id)
+  }
+  return {
+    id: id,
+    title: backend.title || '',
+    author: backend.author || '',
+    publisher: backend.publisher || '',
+    pub_year: backend.pub_year?.toString() || '',
+    isbn: backend.isbn,
+    kdc: backend.kdc_code || '',
+    language: 'ko', // Default language
+  }
+}
+
+/**
+ * Map backend record detail to frontend record detail
+ */
+function mapBackendRecordDetail(backend: BackendRecordDetail): RecordDetail {
+  return {
+    ...mapBackendRecord(backend),
+    pub_place: undefined, // Not available in backend yet
+    description: undefined, // Not available in backend yet
+    pages: undefined, // Not available in backend yet
+    size: undefined, // Not available in backend yet
+    subject: undefined, // Not available in backend yet
+    notes: undefined, // Not available in backend yet
+    marc_fields: undefined, // Not available in backend yet
+  }
+}
 
 /**
  * Get API base URL from environment variable
@@ -121,7 +188,13 @@ export async function getRecords(
   })
   const url = `${baseUrl}/api/v1/records?${params.toString()}`
 
-  return fetchWithErrorHandling<RecordsResponse>(url)
+  const backend = await fetchWithErrorHandling<BackendRecordsResponse>(url)
+  return {
+    items: backend.items.map(mapBackendRecord),
+    total: backend.total,
+    page: backend.page,
+    size: backend.size,
+  }
 }
 
 /**
@@ -134,7 +207,8 @@ export async function getRecordDetail(
   const baseUrl = getApiBaseUrl()
   const url = `${baseUrl}/api/v1/records/${encodeURIComponent(recordId)}`
 
-  return fetchWithErrorHandling<RecordDetail>(url)
+  const backend = await fetchWithErrorHandling<BackendRecordDetail>(url)
+  return mapBackendRecordDetail(backend)
 }
 
 /**
@@ -154,7 +228,13 @@ export async function searchRecords(
   })
   const url = `${baseUrl}/api/v1/search?${params.toString()}`
 
-  return fetchWithErrorHandling<RecordsResponse>(url)
+  const backend = await fetchWithErrorHandling<BackendRecordsResponse>(url)
+  return {
+    items: backend.items.map(mapBackendRecord),
+    total: backend.total,
+    page: backend.page,
+    size: backend.size,
+  }
 }
 
 /**

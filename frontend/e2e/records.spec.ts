@@ -99,7 +99,7 @@ test.describe('KORMARC Web Application', () => {
       await page.waitForSelector('a[href^="/records/"]', { timeout: 5000 })
 
       // Click first record
-      await page.click('a[href^="/records/"].first')
+      await page.locator('a[href^="/records/"]').first().click()
 
       // Check navigation to detail page
       await expect(page).toHaveURL(/\/records\/[^/]+$/)
@@ -113,10 +113,15 @@ test.describe('KORMARC Web Application', () => {
       await page.waitForSelector('a[href^="/records/"]', { timeout: 5000 })
 
       // Click first record
-      await page.click('a[href^="/records/"].first')
+      await page.locator('a[href^="/records/"]').first().click()
+
+      // Wait for navigation to complete
+      await page.waitForURL(/\/records\/[^/]+$/, { timeout: 5000 })
+
+      // Wait for page content to load
+      await page.waitForSelector('[data-slot="card-title"]', { timeout: 5000 })
 
       // Check detail page elements
-      await expect(page.locator('h2, h3')).toBeVisible()
       await expect(page.locator('text=저자')).toBeVisible()
       await expect(page.locator('text=출판사')).toBeVisible()
 
@@ -146,18 +151,30 @@ test.describe('KORMARC Web Application', () => {
     test('should perform search', async ({ page }) => {
       // Enter search query
       const searchInput = page.locator('input[placeholder*="검색"]')
-      await searchInput.fill('Python')
+      await searchInput.fill('컴퓨터')
 
       // Submit search
       const searchButton = page.locator('button:has-text("검색")')
       await searchButton.click()
 
       // Wait for results
-      await page.waitForSelector('text=/Python.*검색 결과/', { timeout: 5000 })
+      await page.waitForSelector('text=/컴퓨터.*검색 결과/', { timeout: 5000 })
+
+      // Debug: Check all links on page
+      const allLinks = page.locator('a')
+      const linkCount = await allLinks.count()
+      console.log(`Total links on page: ${linkCount}`)
+
+      for (let i = 0; i < Math.min(linkCount, 10); i++) {
+        const href = await allLinks.nth(i).getAttribute('href')
+        const text = await allLinks.nth(i).textContent()
+        console.log(`Link ${i}: href="${href}", text="${text?.substring(0, 50)}"`)
+      }
 
       // Check if results are displayed
       const resultCards = page.locator('a[href^="/records/"]')
       const count = await resultCards.count()
+      console.log(`Result cards with href^="/records/": ${count}`)
 
       expect(count).toBeGreaterThan(0)
     })
@@ -219,7 +236,8 @@ test.describe('KORMARC Web Application', () => {
 
       // Check if buttons have aria-labels
       const searchButton = page.locator('button[aria-label]')
-      await expect(searchButton).toHaveCountGreaterThan(0)
+      const count = await searchButton.count()
+      expect(count).toBeGreaterThan(0)
     })
   })
 })
