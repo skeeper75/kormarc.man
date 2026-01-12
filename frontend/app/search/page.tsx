@@ -140,7 +140,11 @@ export default function SearchPage() {
               </button>
             )}
           </div>
-          <Button type="submit" disabled={isSearching || !inputValue.trim()}>
+          <Button
+            type="submit"
+            disabled={isSearching || !inputValue.trim()}
+            aria-label="검색"
+          >
             {isSearching ? '검색 중...' : '검색'}
           </Button>
         </form>
